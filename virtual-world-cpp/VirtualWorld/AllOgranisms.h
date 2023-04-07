@@ -1,10 +1,11 @@
 #pragma once
-const int typeCount = 8; // Number of types of organisms
+const int typeCount = 9; // Number of types of organisms
 
 #include "Plants\Plant.h"
 #include "Plants\Grass.h"
 #include "Plants\Dandelion.h"
 #include "Plants\Guarana.h"
+#include "Plants\Nightshade.h"
 
 #include "Animals\Animal.h"
 #include "Animals\Wolf.h"

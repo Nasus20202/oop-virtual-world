@@ -6,8 +6,7 @@
 using namespace std;
 
 void Game::Turn() {
-    if(alive)
-        Update();
+    Update();
     ClearScreen();
     Print();
     Input();
@@ -17,17 +16,21 @@ void Game::Print() {
     //cout << "Krzysztof Nasuta 193328\t\tControls: WASD - move, SPACE - pass, Q - quit, E - special ability, L - load, 0 - save\n\n" << endl;
     if(alive) {
         cout << "X: " << player->getX() << " Y: " << player->getY() << "\t\t\tTurn: " << round << endl;
-        world->Print(player->getX(), player->getY(), viewRange);
-        world->ClearMessages();
     }
     else {
-        cout << "\n\n\n\n\n\n\n\n\n\n\t\t\t\t\tYou died!" << endl;
+        cout << "\t\t\tYou died!" << endl;
     }
+    world->Print(currentX, currentY, viewRange);
+    world->ClearMessages();
 }
 
 void Game::Update() {
     round++;
-    player->Move(moveX, moveY);
+    if(alive) {
+        player->Move(moveX, moveY);
+        currentX = player->getX();
+        currentY = player->getY();
+    }
     world->Update();
     if(!player->IsAlive())
         alive = false;
