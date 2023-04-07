@@ -1,3 +1,4 @@
+#include <string>
 #include "Animal.h"
 
 Animal::Animal(int x, int y, int strength, int initiative, int age, char symbol, void* world) :
@@ -5,7 +6,16 @@ Animal::Animal(int x, int y, int strength, int initiative, int age, char symbol,
 
 void Animal::Collision(Organism *other) {
     if(this->TryToBreed(other)){
-
+        World* w = (World*)this->world;
+        int x = -1, y = -1;
+        do {
+            x = rand() % 3 - 1 + this->x;
+            y = rand() % 3 - 1 + this->y;
+        } while (x < 0 || x >= w->GetWidth() || y < 0 || y >= w->GetHeight() || (x == this->x && y == this->y) || (x == other->getX() && y == other->getY()));
+        if(w->GetOrganism(x, y) != nullptr)
+            return;
+        w->AddOrganism(this->Clone(x, y, world));
+        w->AddMessage("New " + this->GetName() + " was born at " + std::to_string(x) + " " + std::to_string(y) + "!");
     }
     else
         Organism::Collision(other); // attack

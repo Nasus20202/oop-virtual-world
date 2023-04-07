@@ -1,19 +1,23 @@
+#include <string>
 #include "Plant.h"
 
 Plant::Plant(int x, int y, int strength, int age, char symbol, void* world) :
             Organism(x, y, strength, 0, age, symbol, world) {}
 
 void Plant::Action() {
-    World* world = (World*)this->world;
-    int x = rand() % 3 - 1;
-    int y = rand() % 3 - 1;
-    if (x == 0 && y == 0) return;
-    if(x + this->x < 0 || x + this->x >= world->GetWidth() || y + this->y < 0 || y + this->y >= world->GetHeight())
+    World* w = (World*)this->world;
+    int x = -1, y = -1;
+    do {
+        x = rand() % 3 - 1 + this->x;
+        y = rand() % 3 - 1 + this->y;
+    } while (x < 0 || x >= w->GetWidth() || y < 0 || y >= w->GetHeight() || (x == this->x && y == this->y));
+    if(w->GetOrganism(x, y) != nullptr)
         return;
-    if (world->GetOrganism(x + this->x, y + this->y) == nullptr) {
-        world->AddOrganism(this->Clone(x + this->x, y + this->y, this->world));
+    int probability = rand() % seedingProbability;
+    if(probability == 0){
+        w->AddOrganism(this->Clone(x, y, world));
+        w->AddMessage("New " + this->GetName() + " was seeded at " + std::to_string(x) + " " + std::to_string(y) + "!");
     }
-
 }
 
 Plant::~Plant() {

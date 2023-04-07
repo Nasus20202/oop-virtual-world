@@ -114,8 +114,8 @@ void Game::NewGame() {
     //cout << "Enter height: ";
     //cin >> height;
 
-    width = 100;
-    height = 100;
+    width = 25;
+    height = 25;
     world = new World(width, height);
     player = new Human(width/2, height/2, world);
     world->AddOrganism(player);

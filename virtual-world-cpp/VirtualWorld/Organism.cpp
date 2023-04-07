@@ -64,11 +64,10 @@ void Organism::Collision(Organism* other) {
     if(thisWin || other->getAge() == -1){
         w->RemoveOrganism(other);
         w->MoveOrganism(this, other->getX(), other->getY());
-        if(other->GetName() != "Grass")
-            w->AddMessage(this->GetName() + " killed " + other->GetName());
+        w->AddMessage(other->GetName()+ " was eaten by " + this->GetName());
     } else {
         w->RemoveOrganism(this);
-        w->AddMessage(other->GetName() + " killed " + this->GetName());
+        w->AddMessage(this->GetName() + " was killed by " + other->GetName());
     }
 }
 

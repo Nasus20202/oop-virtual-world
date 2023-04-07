@@ -127,23 +127,21 @@ void World::Update() {
 }
 
 void World::Randomize() {
-    int organismsCount = width * height / 50 + 5;
-    for(int i = 0; i < organismsCount; i++) {
-        int x = rand() % width;
-        int y = rand() % height;
-        if(IsOccupied(x, y))
-            continue;
-        int type = rand() % typeCount;
-        switch(type) {
-            case 0:
-                AddOrganism(new Sheep(x, y, this));
-                break;
-            case 1:
-                AddOrganism(new Wolf(x, y, this));
-                break;
-            case 2:
-                AddOrganism(new Grass(x, y, this));
-                break;
+    const int organismsCount = 2 + sqrt((width + height)/2)*0.6;
+    for(int i = 0; i < typeCount; i++){
+        for(int j = 0; j < organismsCount; j++) {
+            int x = rand() % width;
+            int y = rand() % height;
+            if(!IsOccupied(x, y)) {
+                switch(i) {
+                    case 0:
+                        AddOrganism(new Sheep(x, y, this)); break;
+                    case 1:
+                        AddOrganism(new Wolf(x, y, this)); break;
+                    case 2:
+                        AddOrganism(new Grass(x, y, this)); break;
+                }
+            }
         }
     }
 }
