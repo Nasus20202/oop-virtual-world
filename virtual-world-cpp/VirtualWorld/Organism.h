@@ -11,8 +11,6 @@ protected:
 public:
     Organism(int x, int y, int strength, int initiative, int age, char symbol);
     virtual void Action() = 0;
-    virtual void Collision() = 0;
-    virtual void Draw() = 0;
     virtual void Collision(Organism &other) = 0;
     virtual bool AttackPaired(Organism &attacker) = 0;
     virtual void Save(std::ofstream& file) = 0;

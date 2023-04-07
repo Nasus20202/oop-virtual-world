@@ -6,11 +6,11 @@ class World {
 private:
     int width, height;
     std::vector<Tile> map;
-    Tile& GetTile(int x, int y);
-    Organism& GetOrganism(int x, int y);
-    bool IsOccupied(int x, int y);
 public:
     World(int width, int height);
     ~World();
-    void Print();
+    void Print(int x, int y, int range);
+    Tile& GetTile(int x, int y);
+    Organism& GetOrganism(int x, int y);
+    bool IsOccupied(int x, int y);
 };

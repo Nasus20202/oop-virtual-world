@@ -1,6 +1,8 @@
 #include "Tile.h"
 
 bool Tile::IsOccupied() {
+    if(organism == nullptr)
+        return false;
     return organism != nullptr;
 }
 
