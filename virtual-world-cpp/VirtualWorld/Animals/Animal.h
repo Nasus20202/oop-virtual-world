@@ -1,14 +1,11 @@
-#ifndef VIRTUAL_WORLD_ANIMALS_ANIMAL_H
-#define VIRTUAL_WORLD_ANIMALS_ANIMAL_H
-
+#pragma once
 #include "../Organism.h"
+#include "../World.h"
 
 class Animal : public Organism {
 protected:
     virtual void Move() = 0;
     virtual void Breed() = 0;
 public:
-    Animal(int x, int y, int strength, int initiative, int age, char symbol);
+    Animal(int x, int y, int strength, int initiative, int age, char symbol, void* world);
 };
-
-#endif //VIRTUAL_WORLD_ANIMALS_ANIMAL_H

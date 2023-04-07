@@ -3,7 +3,7 @@
 
 class Sheep : public Animal {
 public:
-    Sheep(int x, int y);
+    Sheep(int x, int y, void* world);
     void Action() override;
     void Collision(Organism &other) override;
     bool AttackPaired(Organism &attacker) override;

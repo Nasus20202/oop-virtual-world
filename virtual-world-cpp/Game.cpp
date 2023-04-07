@@ -79,7 +79,8 @@ void Game::Initialize() {
     world = new World(20, 20);
     playerX = 10;
     playerY = 10;
-    world->GetTile(playerX, playerY).SetOrganism(new Human(playerX, playerY));
+    world->GetTile(playerX, playerY).SetOrganism(new Human(playerX, playerY, world));
+    player = (Human*)world->GetTile(playerX, playerY).GetOrganism();
 }
 
 void Game::Load(std::string filename) {

@@ -1,7 +1,6 @@
 #include "Human.h"
 
-Human::Human(int x, int y) : Animal(x, y, 5, 4, 0, 'X') {
-
+Human::Human(int x, int y, void* world) : Animal(x, y, 5, 4, 0, 'X', world) {
 }
 
 void Human::Action() {

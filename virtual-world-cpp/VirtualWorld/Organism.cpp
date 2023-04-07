@@ -1,6 +1,6 @@
 #include "Organism.h"
 
-Organism::Organism(int x, int y, int strength, int initiative, int age, char symbol) : x(x), y(y), strength(strength), initiative(initiative), age(age), symbol(symbol) {
+Organism::Organism(int x, int y, int strength, int initiative, int age, char symbol, void* world) : x(x), y(y), strength(strength), initiative(initiative), age(age), symbol(symbol), world(world) {
 }
 
 int Organism::getX() const {

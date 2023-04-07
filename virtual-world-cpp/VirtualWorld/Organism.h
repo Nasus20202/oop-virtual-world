@@ -8,8 +8,9 @@ protected:
     int initiative;
     int age;
     char symbol;
+    void* world;
 public:
-    Organism(int x, int y, int strength, int initiative, int age, char symbol);
+    Organism(int x, int y, int strength, int initiative, int age, char symbol, void* world);
     virtual void Action() = 0;
     virtual void Collision(Organism &other) = 0;
     virtual bool AttackPaired(Organism &attacker) = 0;
