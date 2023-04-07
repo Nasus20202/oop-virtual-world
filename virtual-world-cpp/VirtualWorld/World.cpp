@@ -1,6 +1,7 @@
 #include "World.h"
 #include <iostream>
 #include <algorithm>
+#include "AllOgranisms.h"
 
 World::World(int width, int height) : width(width), height(height) {
     map.resize(width * height);
@@ -112,5 +113,24 @@ void World::Update() {
     });
     for(Organism* organism : organisms) {
         organism->Action();
+    }
+}
+
+void World::Randomize() {
+    int organismsCount = width * height / 50 + 5;
+    for(int i = 0; i < organismsCount; i++) {
+        int x = rand() % width;
+        int y = rand() % height;
+        if(IsOccupied(x, y))
+            continue;
+        int type = rand() % typeCount;
+        switch(type) {
+            case 0:
+                AddOrganism(new Sheep(x, y, this));
+                break;
+            case 1:
+                AddOrganism(new Wolf(x, y, this));
+                break;
+        }
     }
 }

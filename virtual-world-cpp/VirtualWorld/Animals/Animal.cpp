@@ -12,6 +12,8 @@ void Animal::Action() {
     int x = rand() % 3 - 1;
     int y = rand() % 3 - 1;
     if (x == 0 && y == 0) return;
+    if(x + this->x < 0 || x + this->x >= world->GetWidth() || y + this->y < 0 || y + this->y >= world->GetHeight())
+        return;
     Organism* other = world->GetOrganism(x + this->x, y + this->y);
     if (other != nullptr) {
         this->Collision(*other);

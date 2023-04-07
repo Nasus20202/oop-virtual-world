@@ -115,8 +115,7 @@ void Game::NewGame() {
     playerY = height / 2;
     player = new Human(playerX, playerY, world);
     world->AddOrganism(player);
-    world->AddOrganism(new Wolf(10, 10, world));
-    world->AddOrganism(new Sheep(20, 20, world));
+    world->Randomize();
 }
 
 void Game::ClearScreen() {
