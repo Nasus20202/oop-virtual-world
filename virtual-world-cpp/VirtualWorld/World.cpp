@@ -127,7 +127,7 @@ void World::Update() {
 }
 
 void World::Randomize() {
-    const int organismsCount = 2 + sqrt((width + height)/2)*0.6;
+    const int organismsCount = 2 + sqrt((width + height)/2)*0.1;
     for(int i = 0; i < typeCount; i++){
         for(int j = 0; j < organismsCount; j++) {
             int x = rand() % width;
@@ -146,6 +146,10 @@ void World::Randomize() {
                         AddOrganism(new Turtle(x, y, this)); break;
                     case 5:
                         AddOrganism(new Antelope(x, y, this)); break;
+                    case 6:
+                        AddOrganism(new Dandelion(x, y, this)); break;
+                    case 7:
+                        AddOrganism(new Guarana(x, y, this)); break;
                 }
             }
         }

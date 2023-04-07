@@ -7,5 +7,6 @@ class Plant : public Organism {
 public:
     ~Plant() override;
     void Action() override;
+    bool AttackPaired(Organism *attacker) override;
     Plant(int x, int y, int strength, int age, char symbol, void* world);
 };

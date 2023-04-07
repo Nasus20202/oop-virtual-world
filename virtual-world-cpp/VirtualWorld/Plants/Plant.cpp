@@ -23,3 +23,7 @@ void Plant::Action() {
 Plant::~Plant() {
 
 }
+
+bool Plant::AttackPaired(Organism *attacker) {
+    return false;
+}

@@ -79,4 +79,8 @@ bool Organism::IsAlive() {
     return alive;
 }
 
+void Organism::setStrength(int strength) {
+    this->strength = strength;
+}
+
 Organism::~Organism() = default;

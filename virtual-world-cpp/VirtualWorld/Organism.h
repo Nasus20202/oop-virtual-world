@@ -25,6 +25,7 @@ public:
     int getY() const;
     void setY(int y);
     int getStrength() const;
+    void setStrength(int strength);
     int getInitiative() const;
     int getAge() const;
     void setAge(int age);
