@@ -1,5 +1,6 @@
 #pragma once
-#include <fstream>
+#include "TypeCodes.h"
+#include <string>
 
 class Organism {
 protected:
@@ -18,8 +19,8 @@ public:
     virtual bool AttackPaired(Organism *attacker) = 0;
     virtual std::string GetName() = 0;
     virtual Organism* Clone(int x, int y, void* world) = 0;
-    void Save(std::ofstream& file);
-    void Load(std::ifstream& file);
+    void Save(FILE* file);
+    void Load(FILE* file);
     int getX() const;
     void setX(int x);
     int getY() const;

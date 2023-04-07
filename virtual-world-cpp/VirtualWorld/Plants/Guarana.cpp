@@ -4,7 +4,7 @@
 
 #include "Guarana.h"
 
-Guarana::Guarana(int x, int y, void *world) : Plant(x, y, 0, 0, 'g', world) {}
+Guarana::Guarana(int x, int y, void *world) : Plant(x, y, 0, 0, guaranaCode, world) {}
 
 Plant *Guarana::Clone(int x, int y, void *world) {
     return new Guarana(x, y, world);

@@ -1,8 +1,7 @@
 #include "Human.h"
 
-Human::Human(int x, int y, void* world) : Animal(x, y, 5, 4, 0, 'X', world) {
+Human::Human(int x, int y, void* world) : Animal(x, y, 5, 4, 0, humanCode, world) {
 }
-
 void Human::Action() {
     World* world = (World*)this->world;
     int newX = this->x + moveX, newY = this->y + moveY;

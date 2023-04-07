@@ -1,7 +1,7 @@
 #include <string>
 #include "Antelope.h"
 
-Antelope::Antelope(int x, int y, void *world) : Animal(x, y, 4, 4, 0, 'A', world) {}
+Antelope::Antelope(int x, int y, void *world) : Animal(x, y, 4, 4, 0, antelopeCode, world) {}
 
 bool Antelope::AttackPaired(Organism *attacker) {
     int random = rand() % 2;

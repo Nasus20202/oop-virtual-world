@@ -1,7 +1,7 @@
 #include <string>
 #include "Turtle.h"
 
-Turtle::Turtle(int x, int y, void *world) : Animal(x, y, 2, 1, 0, 'T', world) {}
+Turtle::Turtle(int x, int y, void *world) : Animal(x, y, 2, 1, 0, turtleCode, world) {}
 
 bool Turtle::AttackPaired(Organism *attacker) {
     if(attacker->getStrength() >= 5)

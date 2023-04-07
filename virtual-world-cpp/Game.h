@@ -12,7 +12,7 @@ private:
     void Initialize();
     void Load(std::string filename);
     void Save(std::string filename);
-    void NewGame();
+    void NewGame(int width = -1, int height = -1);
     void Turn();
     void Print();
     void Input();

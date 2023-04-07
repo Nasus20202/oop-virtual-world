@@ -42,11 +42,11 @@ char Organism::getSymbol() const {
     return symbol;
 }
 
-void Organism::Save(std::ofstream &file) {
+void Organism::Save(FILE* file) {
 
 }
 
-void Organism::Load(std::ifstream &file) {
+void Organism::Load(FILE* file) {
 
 }
 

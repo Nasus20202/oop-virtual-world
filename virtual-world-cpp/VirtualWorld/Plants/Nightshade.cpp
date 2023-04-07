@@ -1,6 +1,6 @@
 #include "Nightshade.h"
 
-Nightshade::Nightshade(int x, int y, void *world) : Plant(x, y, 99, 0, 'o', world) {}
+Nightshade::Nightshade(int x, int y, void *world) : Plant(x, y, 99, 0, nightshadeCode, world) {}
 
 Plant *Nightshade::Clone(int x, int y, void *world) {
     return new Nightshade(x, y, world);

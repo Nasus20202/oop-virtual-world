@@ -1,6 +1,6 @@
 #include "SosnowskysHogweed.h"
 
-SosnowskysHogweed::SosnowskysHogweed(int x, int y, void *world)  : Plant(x, y, 10, 0, 'Y', world){}
+SosnowskysHogweed::SosnowskysHogweed(int x, int y, void *world)  : Plant(x, y, 10, 0, sosnowskyHogweedCode, world){}
 
 Plant *SosnowskysHogweed::Clone(int x, int y, void *world) {
     return new SosnowskysHogweed(x, y, world);

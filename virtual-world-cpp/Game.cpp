@@ -19,6 +19,7 @@ void Game::Print() {
     else
         cout << "\t\tYou died!" << endl;
     world->Print(currentX, currentY, viewRange);
+    cout << endl;
     world->ClearMessages();
 }
 
@@ -99,22 +100,67 @@ void Game::Initialize() {
 }
 
 void Game::Load(std::string filename) {
+    FILE* file;
+    fopen_s(&file, filename.c_str(), "rb");
+    if(file == nullptr) {
+        cout << "File not found!" << endl;
+        Input();
+        return;
+    }
+    int width, height, organismsCount;
+    fread(&width, sizeof(int), 1, file);
+    fread(&height, sizeof(int), 1, file);
+    NewGame(width, height);
+    fread(&round, sizeof(int), 1, file);
+    fread(&alive, sizeof(bool), 1, file);
+    fread(&currentX, sizeof(int), 1, file);
+    fread(&currentY, sizeof(int), 1, file);
+    fread(&organismsCount, sizeof(int), 1, file);
+    for(int i = 0; i < organismsCount; i++) {
+        char type;
+        fread(&type, sizeof(char), 1, file);
+        Organism* organism = nullptr;
+        switch(type) {
 
+        }
+        organism->Load(file);
+        world->AddOrganism(organism);
+    }
 }
 
 void Game::Save(std::string filename) {
+    FILE* file;
+    fopen_s(&file, filename.c_str(), "wb");
+    if(file == nullptr){
+        cout << "Error while saving!" << endl;
+        Input();
+        return;
+    }
+    int width = world->GetWidth(), height = world->GetHeight(), organismsCount = world->GetOrganisms().size();
+    fwrite(&width, sizeof(int), 1, file);
+    fwrite(&height, sizeof(int), 1, file);
+    fwrite(&round, sizeof(int), 1, file);
+    fwrite(&alive, sizeof(bool), 1, file);
+    fwrite(&currentX, sizeof(int), 1, file);
+    fwrite(&currentY, sizeof(int), 1, file);
+    fwrite(&organismsCount, sizeof(int), 1, file);
+    for(auto organism : world->GetOrganisms()) {
+        char type = organism->getSymbol();
+        fwrite(&type, sizeof(char ), 1, file);
+        organism->Save(file);
+    }
 
 }
 
-void Game::NewGame() {
+void Game::NewGame(int width, int height) {
     ClearScreen();
     delete world;
-    int width = 20, height = 20;
-    //cout << "Enter width: ";
-    //cin >> width;
-    //cout << "Enter height: ";
-    //cin >> height;
-
+    if(width == -1 || height == -1) {
+        //cout << "Enter width: ";
+        //cin >> width;
+        //cout << "Enter height: ";
+        //cin >> height;
+    }
     width = 25;
     height = 25;
     world = new World(width, height);

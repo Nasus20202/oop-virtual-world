@@ -15,6 +15,7 @@ public:
     void Print(int x, int y, int range);
     Tile* GetTile(int x, int y);
     Organism* GetOrganism(int x, int y);
+    std::vector<Organism*> &GetOrganisms();
     bool IsOccupied(int x, int y);
     void AddOrganism(Organism* organism);
     void RemoveOrganism(Organism* organism);

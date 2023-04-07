@@ -192,3 +192,7 @@ void World::AddMessage(const std::string& message) {
 void World::ClearMessages() {
     messages.clear();
 }
+
+std::vector<Organism *> &World::GetOrganisms() {
+    return organisms;
+}

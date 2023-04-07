@@ -1,7 +1,7 @@
 #include <string>
 #include "Fox.h"
 
-Fox::Fox(int x, int y, void *world) : Animal(x, y, 3, 7, 0, 'F', world) {}
+Fox::Fox(int x, int y, void *world) : Animal(x, y, 3, 7, 0, foxCode, world) {}
 
 bool Fox::AttackPaired(Organism *attacker) {
     return false;
