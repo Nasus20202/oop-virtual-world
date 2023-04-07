@@ -7,16 +7,18 @@ using namespace std;
 
 void Game::Turn() {
     ClearScreen();
-    Print();
-    Input();
     if(alive)
         Update();
+    Print();
+    Input();
 }
 
 void Game::Print() {
+    //cout << "Krzysztof Nasuta 193328\t\t\tControls: WASD - move, Q - quit, E - special ability, L - load, 0 - save" << endl;
     if(alive) {
-        cout << player->getX() << " " << player->getY() << endl;
-        world->Print(moveX, moveY, viewRange);
+        cout << "X: " << player->getX() << " Y: " << player->getY() << "\t\t\tTurn: " << round << endl;
+        world->Print(player->getX(), player->getY(), viewRange);
+        world->ClearMessages();
     }
     else {
         cout << "You died!" << endl;
@@ -24,6 +26,7 @@ void Game::Print() {
 }
 
 void Game::Update() {
+    round++;
     player->Move(moveX, moveY);
     world->Update();
     if(!player->IsAlive())
@@ -105,18 +108,20 @@ void Game::Save(std::string filename) {
 void Game::NewGame() {
     ClearScreen();
     delete world;
-    int width, height;
+    int width = 20, height = 20;
     //cout << "Enter width: ";
     //cin >> width;
     //cout << "Enter height: ";
     //cin >> height;
-    width = 20;
-    height = 20;
+
+    width = 100;
+    height = 100;
     world = new World(width, height);
     player = new Human(width/2, height/2, world);
     world->AddOrganism(player);
     world->Randomize();
     alive = true;
+    round = 0;
 }
 
 void Game::ClearScreen() {

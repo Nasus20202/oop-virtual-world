@@ -1,3 +1,4 @@
+#include <string>
 #include "Organism.h"
 #include "World.h"
 
@@ -54,6 +55,8 @@ void Organism::Collision(Organism* other) {
     bool thisWin = true;
     if(this == other)
         return;
+    if(other->AttackPaired(this))
+        return;
     if(other->getStrength() > this->getStrength())
         thisWin = false;
     else if(other->getStrength() == this->getStrength() && other->getAge() > this->getAge())
@@ -61,8 +64,11 @@ void Organism::Collision(Organism* other) {
     if(thisWin || other->getAge() == -1){
         w->RemoveOrganism(other);
         w->MoveOrganism(this, other->getX(), other->getY());
+        if(other->GetName() != "Grass")
+            w->AddMessage(this->GetName() + " killed " + other->GetName());
     } else {
         w->RemoveOrganism(this);
+        w->AddMessage(other->GetName() + " killed " + this->GetName());
     }
 }
 

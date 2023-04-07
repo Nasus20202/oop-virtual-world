@@ -4,7 +4,11 @@ Animal::Animal(int x, int y, int strength, int initiative, int age, char symbol,
                 Organism(x, y, strength, initiative, age, symbol, world) {}
 
 void Animal::Collision(Organism *other) {
-    Organism::Collision(other);
+    if(this->TryToBreed(other)){
+
+    }
+    else
+        Organism::Collision(other); // attack
 }
 
 void Animal::Action() {

@@ -18,3 +18,7 @@ void Grass::Collision(Organism *other) {
 bool Grass::AttackPaired(Organism *attacker) {
     return false;
 }
+
+std::string Grass::GetName() {
+    return "Grass";
+}

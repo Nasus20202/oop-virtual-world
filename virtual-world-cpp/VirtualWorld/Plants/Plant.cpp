@@ -11,8 +11,7 @@ void Plant::Action() {
     if(x + this->x < 0 || x + this->x >= world->GetWidth() || y + this->y < 0 || y + this->y >= world->GetHeight())
         return;
     if (world->GetOrganism(x + this->x, y + this->y) == nullptr) {
-        Plant* newPlant = this->Clone(x + this->x, y + this->y, this->world);
-        world->AddOrganism(newPlant);
+        world->AddOrganism(this->Clone(x + this->x, y + this->y, this->world));
     }
 
 }

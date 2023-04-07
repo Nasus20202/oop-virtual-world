@@ -8,4 +8,5 @@ public:
     void Action() override;
     void Collision(Organism *other) override;
     bool AttackPaired(Organism *attacker) override;
+    std::string GetName() override;
 };

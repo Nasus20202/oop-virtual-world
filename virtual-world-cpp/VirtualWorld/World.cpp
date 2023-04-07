@@ -48,7 +48,10 @@ void World::Print(int x, int y, int range) {
             else
                 std::cout << "  ";
         }
-        std::cout << "\xDB\n";
+        std::cout << "\xDB";
+        if(itY - startY < messages.size())
+            std::cout << "\t" << messages[itY - startY];
+        std::cout << std::endl;
     }
     std::cout << "\xDB";
     for(int i = startX; i <= endX; i++)
@@ -164,4 +167,16 @@ void World::RemoveDead() {
             i--;
         }
     }
+}
+
+std::vector<std::string> &World::GetMessages() {
+    return messages;
+}
+
+void World::AddMessage(const std::string& message) {
+    messages.push_back(message);
+}
+
+void World::ClearMessages() {
+    messages.clear();
 }

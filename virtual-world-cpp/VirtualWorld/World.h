@@ -7,6 +7,7 @@ private:
     int width, height;
     std::vector<Tile> map;
     std::vector<Organism*> organisms;
+    std::vector<std::string> messages;
 public:
     World(int width, int height);
     ~World();
@@ -25,4 +26,7 @@ public:
     void Update();
     void RemoveDead();
     void Randomize();
+    void AddMessage(const std::string& message);
+    std::vector<std::string>& GetMessages();
+    void ClearMessages();
 };

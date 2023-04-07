@@ -29,3 +29,15 @@ void Human::SpecialAbility() {
 void Human::Move(int x, int y) {
     moveX = x, moveY = y;
 }
+
+bool Human::TryToBreed(Organism *other) {
+    return false;
+}
+
+std::string Human::GetName() {
+    return "Human";
+}
+
+Organism *Human::Clone(int x, int y, void *world) {
+    return nullptr;
+}
