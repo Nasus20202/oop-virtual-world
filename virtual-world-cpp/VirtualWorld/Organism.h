@@ -14,8 +14,8 @@ public:
     virtual ~Organism();
     Organism(int x, int y, int strength, int initiative, int age, char symbol, void* world);
     virtual void Action() = 0;
-    virtual void Collision(Organism &other);
-    virtual bool AttackPaired(Organism &attacker) = 0;
+    virtual void Collision(Organism *other);
+    virtual bool AttackPaired(Organism *attacker) = 0;
     void Save(std::ofstream& file);
     void Load(std::ifstream& file);
     int getX() const;

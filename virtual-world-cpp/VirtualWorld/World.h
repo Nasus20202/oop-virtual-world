@@ -12,7 +12,7 @@ public:
     ~World();
     void Empty();
     void Print(int x, int y, int range);
-    Tile& GetTile(int x, int y);
+    Tile* GetTile(int x, int y);
     Organism* GetOrganism(int x, int y);
     bool IsOccupied(int x, int y);
     void AddOrganism(Organism* organism);

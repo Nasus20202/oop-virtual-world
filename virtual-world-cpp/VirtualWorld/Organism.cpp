@@ -49,16 +49,18 @@ void Organism::Load(std::ifstream &file) {
 
 }
 
-void Organism::Collision(Organism &other) {
+void Organism::Collision(Organism* other) {
     World *w = (World *) this->world;
     bool thisWin = true;
-    if(other.getStrength() > this->getStrength())
+    if(this == other)
+        return;
+    if(other->getStrength() > this->getStrength())
         thisWin = false;
-    else if(other.getStrength() == this->getStrength() && other.getAge() > this->getAge())
+    else if(other->getStrength() == this->getStrength() && other->getAge() > this->getAge())
         thisWin = false;
-    if(thisWin || other.getAge() == -1){
-        w->RemoveOrganism(&other);
-        w->MoveOrganism(this, other.getX(), other.getY());
+    if(thisWin || other->getAge() == -1){
+        w->RemoveOrganism(other);
+        w->MoveOrganism(this, other->getX(), other->getY());
     } else {
         w->RemoveOrganism(this);
     }

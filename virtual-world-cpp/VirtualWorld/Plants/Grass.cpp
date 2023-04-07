@@ -11,10 +11,10 @@ void Grass::Action() {
     Plant::Action();
 }
 
-void Grass::Collision(Organism &other) {
+void Grass::Collision(Organism *other) {
 
 }
 
-bool Grass::AttackPaired(Organism &attacker) {
+bool Grass::AttackPaired(Organism *attacker) {
     return false;
 }

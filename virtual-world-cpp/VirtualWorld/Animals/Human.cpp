@@ -11,14 +11,14 @@ void Human::Action() {
     if (world->GetOrganism(newX, newY) == nullptr)
         world->MoveOrganism(this, newX, newY);
     else
-        this->Collision(*(world->GetOrganism(newX, newY)));
+        this->Collision(world->GetOrganism(newX, newY));
 }
 
-void Human::Collision(Organism &other) {
+void Human::Collision(Organism* other) {
     Animal::Collision(other);
 }
 
-bool Human::AttackPaired(Organism &attacker) {
+bool Human::AttackPaired(Organism *attacker) {
     return false;
 }
 

@@ -3,7 +3,7 @@
 Animal::Animal(int x, int y, int strength, int initiative, int age, char symbol, void* world) :
                 Organism(x, y, strength, initiative, age, symbol, world) {}
 
-void Animal::Collision(Organism &other) {
+void Animal::Collision(Organism *other) {
     Organism::Collision(other);
 }
 
@@ -15,8 +15,10 @@ void Animal::Action() {
     if(x + this->x < 0 || x + this->x >= world->GetWidth() || y + this->y < 0 || y + this->y >= world->GetHeight())
         return;
     Organism* other = world->GetOrganism(x + this->x, y + this->y);
+    if(other == this)
+        return;
     if (other != nullptr) {
-        this->Collision(*other);
+        this->Collision(other);
     } else {
         world->MoveOrganism(this, x + this->x, y + this->y);
     }

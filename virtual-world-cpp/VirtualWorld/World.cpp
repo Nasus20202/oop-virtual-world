@@ -56,26 +56,26 @@ void World::Print(int x, int y, int range) {
     std::cout << "\xDB";
 }
 
-Tile &World::GetTile(int x, int y) {
+Tile *World::GetTile(int x, int y) {
     if(x < 0 || x >= width || y < 0 || y >= height)
         throw std::runtime_error("Tile out of bounds");
-    return map[y * width + x];
+    return &map[y * width + x];
 }
 
 Organism *World::GetOrganism(int x, int y) {
-    return GetTile(x, y).GetOrganism();
+    return GetTile(x, y)->GetOrganism();
 }
 
 bool World::IsOccupied(int x, int y) {
-    return GetTile(x, y).IsOccupied();
+    return GetTile(x, y)->IsOccupied();
 }
 
 void World::AddOrganism(Organism *organism) {
     organisms.push_back(organism);
-    Tile &tile = GetTile(organism->getX(), organism->getY());
-    if(tile.IsOccupied())
+    Tile *tile = GetTile(organism->getX(), organism->getY());
+    if(tile->IsOccupied())
         throw std::runtime_error("Tile is already occupied");
-    tile.SetOrganism(organism);
+    tile->SetOrganism(organism);
 }
 
 int World::GetWidth() {
@@ -97,12 +97,12 @@ void World::Load(std::ifstream &file) {\
 void World::MoveOrganism(Organism *organism, int x, int y) {
     if(x < 0 || x >= width || y < 0 || y >= height)
         throw std::runtime_error("Invalid coordinates");
-    Tile &tile = GetTile(x, y);
-    if(tile.IsOccupied())
+    Tile *tile = GetTile(x, y);
+    if(tile->IsOccupied())
         throw std::runtime_error("Tile is already occupied");
-    Tile &oldTile = GetTile(organism->getX(), organism->getY());
-    oldTile.SetOrganism(nullptr);
-    tile.SetOrganism(organism);
+    Tile *oldTile = GetTile(organism->getX(), organism->getY());
+    oldTile->SetOrganism(nullptr);
+    tile->SetOrganism(organism);
     organism->setX(x);
     organism->setY(y);
 }
@@ -116,7 +116,7 @@ void World::Update() {
     });
     for(int i = 0; i < organisms.size(); i++) {
         Organism* organism = organisms[i];
-        if(organism->getAge() < 0)
+        if(!organism->IsAlive())
             continue;
         organism->Action();
         organism->setAge(organism->getAge() + 1);
@@ -146,7 +146,7 @@ void World::Randomize() {
 }
 
 void World::RemoveOrganism(Organism *organism) {
-    GetTile(organism->getX(), organism->getY()).SetOrganism(nullptr);
+    GetTile(organism->getX(), organism->getY())->SetOrganism(nullptr);
     organism->Kill();
 }
 
