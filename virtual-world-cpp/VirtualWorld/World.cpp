@@ -140,6 +140,10 @@ void World::Randomize() {
                         AddOrganism(new Wolf(x, y, this)); break;
                     case 2:
                         AddOrganism(new Grass(x, y, this)); break;
+                    case 3:
+                        AddOrganism(new Fox(x, y, this)); break;
+                    case 4:
+                        AddOrganism(new Turtle(x, y, this)); break;
                 }
             }
         }

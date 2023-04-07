@@ -14,14 +14,14 @@ void Game::Turn() {
 }
 
 void Game::Print() {
-    //cout << "Krzysztof Nasuta 193328\t\t\tControls: WASD - move, Q - quit, E - special ability, L - load, 0 - save" << endl;
+    //cout << "Krzysztof Nasuta 193328\t\tControls: WASD - move, SPACE - pass, Q - quit, E - special ability, L - load, 0 - save\n\n" << endl;
     if(alive) {
         cout << "X: " << player->getX() << " Y: " << player->getY() << "\t\t\tTurn: " << round << endl;
         world->Print(player->getX(), player->getY(), viewRange);
         world->ClearMessages();
     }
     else {
-        cout << "You died!" << endl;
+        cout << "\n\n\n\n\n\n\n\n\n\n\t\t\t\t\tYou died!" << endl;
     }
 }
 

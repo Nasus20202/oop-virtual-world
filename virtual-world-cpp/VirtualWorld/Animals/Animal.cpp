@@ -15,7 +15,7 @@ void Animal::Collision(Organism *other) {
         if(w->GetOrganism(x, y) != nullptr)
             return;
         w->AddOrganism(this->Clone(x, y, world));
-        w->AddMessage("New " + this->GetName() + " was born at " + std::to_string(x) + " " + std::to_string(y) + "!");
+        w->AddMessage("New " + this->GetName() + " was born at " + std::to_string(x) + " " + std::to_string(y));
     }
     else
         Organism::Collision(other); // attack
