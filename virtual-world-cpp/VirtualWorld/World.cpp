@@ -152,6 +152,8 @@ void World::Randomize() {
                         AddOrganism(new Guarana(x, y, this)); break;
                     case 8:
                         AddOrganism(new Nightshade(x, y, this)); break;
+                    case 9:
+                        AddOrganism(new SosnowskysHogweed(x, y, this)); break;
                 }
             }
         }

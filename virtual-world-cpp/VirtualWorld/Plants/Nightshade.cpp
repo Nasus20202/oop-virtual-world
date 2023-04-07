@@ -12,7 +12,10 @@ std::string Nightshade::GetName() {
 
 bool Nightshade::AttackPaired(Organism *attacker) {
     attacker->Kill();
+    this->Kill();
     World *w = (World *) world;
+    w->GetTile(getX(), getY())->SetOrganism(nullptr);
+    w->GetTile(attacker->getX(), attacker->getY())->SetOrganism(nullptr);
     w->AddMessage(attacker->GetName() + " ate nightshade and died!");
-    return false;
+    return true;
 }
