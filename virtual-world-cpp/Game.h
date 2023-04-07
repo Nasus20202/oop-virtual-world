@@ -6,7 +6,7 @@
 class Game {
 private:
     static const int viewRange = 10;
-    World* world = nullptr; bool running = true;
+    World* world = nullptr; bool running = true, alive;
     Human* player = nullptr;
     int moveX = 0, moveY = 0;
     void Initialize();

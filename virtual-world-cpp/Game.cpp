@@ -9,17 +9,26 @@ void Game::Turn() {
     ClearScreen();
     Print();
     Input();
-    Update();
+    if(alive)
+        Update();
 }
 
 void Game::Print() {
-    cout << player->getX() << " " << player->getY() << endl;
-    world->Print(moveX, moveY, viewRange);
+    if(alive) {
+        cout << player->getX() << " " << player->getY() << endl;
+        world->Print(moveX, moveY, viewRange);
+    }
+    else {
+        cout << "You died!" << endl;
+    }
 }
 
 void Game::Update() {
     player->Move(moveX, moveY);
     world->Update();
+    if(!player->IsAlive())
+        alive = false;
+    world->RemoveDead();
 }
 
 void Game::Input() {
@@ -101,12 +110,13 @@ void Game::NewGame() {
     //cin >> width;
     //cout << "Enter height: ";
     //cin >> height;
-    width = 25;
-    height = 25;
+    width = 20;
+    height = 20;
     world = new World(width, height);
     player = new Human(width/2, height/2, world);
     world->AddOrganism(player);
     world->Randomize();
+    alive = true;
 }
 
 void Game::ClearScreen() {

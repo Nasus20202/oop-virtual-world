@@ -8,6 +8,7 @@ World::World(int width, int height) : width(width), height(height) {
 }
 
 World::~World() {
+    Empty();
 }
 
 void World::Print(int x, int y, int range) {
@@ -113,8 +114,10 @@ void World::Update() {
             return a->getAge() > b->getAge();
         return a->getInitiative() > b->getInitiative();
     });
-    std::vector<Organism*> temp = organisms;
-    for(Organism* organism : temp) {
+    for(int i = 0; i < organisms.size(); i++) {
+        Organism* organism = organisms[i];
+        if(organism->getAge() < 0)
+            continue;
         organism->Action();
         organism->setAge(organism->getAge() + 1);
     }
@@ -138,6 +141,27 @@ void World::Randomize() {
             case 2:
                 AddOrganism(new Grass(x, y, this));
                 break;
+        }
+    }
+}
+
+void World::RemoveOrganism(Organism *organism) {
+    GetTile(organism->getX(), organism->getY()).SetOrganism(nullptr);
+    organism->Kill();
+}
+
+void World::Empty() {
+    for(Organism* organism : organisms)
+        delete organism;
+    organisms.clear();
+}
+
+void World::RemoveDead() {
+    for(int i = 0; i < organisms.size(); i++) {
+        if(!organisms[i]->IsAlive()) {
+            delete organisms[i];
+            organisms.erase(organisms.begin() + i);
+            i--;
         }
     }
 }

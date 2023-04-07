@@ -16,3 +16,7 @@ void Plant::Action() {
     }
 
 }
+
+Plant::~Plant() {
+
+}

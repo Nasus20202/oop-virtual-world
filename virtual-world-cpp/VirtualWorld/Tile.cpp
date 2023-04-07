@@ -13,12 +13,3 @@ Organism *Tile::GetOrganism() {
 void Tile::SetOrganism(Organism *newOrganism) {
     this->organism = newOrganism;
 }
-
-Tile::~Tile() {
-    delete organism;
-}
-
-void Tile::killOrganism() {
-    delete organism;
-    organism = nullptr;
-}

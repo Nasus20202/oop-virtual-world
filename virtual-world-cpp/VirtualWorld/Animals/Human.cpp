@@ -7,7 +7,7 @@ void Human::Action() {
     World* world = (World*)this->world;
     int newX = this->x + moveX, newY = this->y + moveY;
     if (newX < 0 || newX >= world->GetWidth() || newY < 0 || newY >= world->GetHeight())
-        throw std::invalid_argument("Invalid coordinates");
+        return;
     if (world->GetOrganism(newX, newY) == nullptr)
         world->MoveOrganism(this, newX, newY);
     else
@@ -15,7 +15,7 @@ void Human::Action() {
 }
 
 void Human::Collision(Organism &other) {
-
+    Animal::Collision(other);
 }
 
 bool Human::AttackPaired(Organism &attacker) {

@@ -1,4 +1,6 @@
 #include "Organism.h"
+#include "World.h"
+
 
 Organism::Organism(int x, int y, int strength, int initiative, int age, char symbol, void* world) : x(x), y(y), strength(strength), initiative(initiative), age(age), symbol(symbol), world(world) {
 }
@@ -46,3 +48,28 @@ void Organism::Save(std::ofstream &file) {
 void Organism::Load(std::ifstream &file) {
 
 }
+
+void Organism::Collision(Organism &other) {
+    World *w = (World *) this->world;
+    bool thisWin = true;
+    if(other.getStrength() > this->getStrength())
+        thisWin = false;
+    else if(other.getStrength() == this->getStrength() && other.getAge() > this->getAge())
+        thisWin = false;
+    if(thisWin || other.getAge() == -1){
+        w->RemoveOrganism(&other);
+        w->MoveOrganism(this, other.getX(), other.getY());
+    } else {
+        w->RemoveOrganism(this);
+    }
+}
+
+void Organism::Kill() {
+    this->alive = false;
+}
+
+bool Organism::IsAlive() {
+    return alive;
+}
+
+Organism::~Organism() = default;
