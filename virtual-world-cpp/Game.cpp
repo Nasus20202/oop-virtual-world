@@ -6,9 +6,9 @@
 using namespace std;
 
 void Game::Turn() {
-    ClearScreen();
     if(alive)
         Update();
+    ClearScreen();
     Print();
     Input();
 }

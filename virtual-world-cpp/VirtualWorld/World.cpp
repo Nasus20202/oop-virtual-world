@@ -135,15 +135,17 @@ void World::Randomize() {
             if(!IsOccupied(x, y)) {
                 switch(i) {
                     case 0:
-                        AddOrganism(new Sheep(x, y, this)); break;
-                    case 1:
                         AddOrganism(new Wolf(x, y, this)); break;
+                    case 1:
+                        AddOrganism(new Sheep(x, y, this)); break;
                     case 2:
                         AddOrganism(new Grass(x, y, this)); break;
                     case 3:
                         AddOrganism(new Fox(x, y, this)); break;
                     case 4:
                         AddOrganism(new Turtle(x, y, this)); break;
+                    case 5:
+                        AddOrganism(new Antelope(x, y, this)); break;
                 }
             }
         }
