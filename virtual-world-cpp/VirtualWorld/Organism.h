@@ -14,8 +14,8 @@ public:
     virtual void Action() = 0;
     virtual void Collision(Organism &other) = 0;
     virtual bool AttackPaired(Organism &attacker) = 0;
-    virtual void Save(std::ofstream& file) = 0;
-    virtual void Load(std::ifstream& file) = 0;
+    void Save(std::ofstream& file);
+    void Load(std::ifstream& file);
     int getX() const;
     void setX(int x);
     int getY() const;

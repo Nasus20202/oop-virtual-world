@@ -6,11 +6,3 @@ Wolf::Wolf(int x, int y, void* world):
 bool Wolf::AttackPaired(Organism &attacker) {
     return false;
 }
-
-void Wolf::Save(std::ofstream &file) {
-
-}
-
-void Wolf::Load(std::ifstream &file) {
-
-}

@@ -38,3 +38,11 @@ void Organism::setAge(int age) {
 char Organism::getSymbol() const {
     return symbol;
 }
+
+void Organism::Save(std::ofstream &file) {
+
+}
+
+void Organism::Load(std::ifstream &file) {
+
+}

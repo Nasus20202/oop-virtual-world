@@ -14,16 +14,17 @@ void Game::Turn() {
 
 void Game::Print() {
     cout << player->getX() << " " << player->getY() << endl;
-    world->Print(playerX, playerY, viewRange);
+    world->Print(moveX, moveY, viewRange);
 }
 
 void Game::Update() {
-    player->Move(playerX, playerY);
+    player->Move(moveX, moveY);
     world->Update();
 }
 
 void Game::Input() {
     bool done = false;
+    moveX = 0, moveY = 0;
     while(!done) {
         done = true;
         char input = _getch();
@@ -42,24 +43,16 @@ void Game::Input() {
             cin >> filename;
             Load(filename);
         } else if (input == 'w')
-            playerY--;
+            moveY = -1;
         else if (input == 'a')
-            playerX--;
+            moveX = -1;
         else if (input == 's')
-            playerY++;
+            moveY = 1;
         else if (input == 'd')
-            playerX++;
+            moveX = 1;
         else if (input != ' ')
             done = false;
     }
-    if(playerX < 0)
-        playerX = 0;
-    if(playerY < 0)
-        playerY = 0;
-    if(playerX >= world->GetWidth())
-        playerX = world->GetWidth() - 1;
-    if(playerY >= world->GetHeight())
-        playerY = world->GetHeight() - 1;
 }
 
 Game::Game() {
@@ -111,9 +104,7 @@ void Game::NewGame() {
     width = 25;
     height = 25;
     world = new World(width, height);
-    playerX = width / 2;
-    playerY = height / 2;
-    player = new Human(playerX, playerY, world);
+    player = new Human(width/2, height/2, world);
     world->AddOrganism(player);
     world->Randomize();
 }

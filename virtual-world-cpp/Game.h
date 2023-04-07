@@ -8,7 +8,7 @@ private:
     static const int viewRange = 10;
     World* world = nullptr; bool running = true;
     Human* player = nullptr;
-    int playerX = 0, playerY = 0;
+    int moveX = 0, moveY = 0;
     void Initialize();
     void Load(std::string filename);
     void Save(std::string filename);

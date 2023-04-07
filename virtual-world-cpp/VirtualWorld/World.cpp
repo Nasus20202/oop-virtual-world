@@ -109,10 +109,14 @@ void World::MoveOrganism(Organism *organism, int x, int y) {
 void World::Update() {
     // sort organisms by initiative
     std::sort(organisms.begin(), organisms.end(), [](Organism* a, Organism* b) {
+        if(a->getInitiative() == b->getInitiative())
+            return a->getAge() > b->getAge();
         return a->getInitiative() > b->getInitiative();
     });
-    for(Organism* organism : organisms) {
+    std::vector<Organism*> temp = organisms;
+    for(Organism* organism : temp) {
         organism->Action();
+        organism->setAge(organism->getAge() + 1);
     }
 }
 
@@ -130,6 +134,9 @@ void World::Randomize() {
                 break;
             case 1:
                 AddOrganism(new Wolf(x, y, this));
+                break;
+            case 2:
+                AddOrganism(new Grass(x, y, this));
                 break;
         }
     }
