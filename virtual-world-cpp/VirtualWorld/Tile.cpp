@@ -1,7 +1,7 @@
 #include "Tile.h"
 
 bool Tile::IsOccupied() {
-    return isOccupied;
+    return organism != nullptr;
 }
 
 Organism *Tile::GetOrganism() {
@@ -9,6 +9,14 @@ Organism *Tile::GetOrganism() {
 }
 
 void Tile::SetOrganism(Organism *newOrganism) {
-    isOccupied = newOrganism != nullptr;
     this->organism = newOrganism;
+}
+
+Tile::~Tile() {
+    delete organism;
+}
+
+void Tile::killOrganism() {
+    delete organism;
+    organism = nullptr;
 }
