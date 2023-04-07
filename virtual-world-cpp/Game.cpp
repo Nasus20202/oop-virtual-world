@@ -19,6 +19,7 @@ void Game::Print() {
 
 void Game::Update() {
     player->Move(playerX, playerY);
+    world->Update();
 }
 
 void Game::Input() {
@@ -48,7 +49,7 @@ void Game::Input() {
             playerY++;
         else if (input == 'd')
             playerX++;
-        else
+        else if (input != ' ')
             done = false;
     }
     if(playerX < 0)
@@ -62,6 +63,7 @@ void Game::Input() {
 }
 
 Game::Game() {
+    srand(time(nullptr));
 }
 
 Game::~Game() {
@@ -113,6 +115,8 @@ void Game::NewGame() {
     playerY = height / 2;
     player = new Human(playerX, playerY, world);
     world->AddOrganism(player);
+    world->AddOrganism(new Wolf(10, 10, world));
+    world->AddOrganism(new Sheep(20, 20, world));
 }
 
 void Game::ClearScreen() {

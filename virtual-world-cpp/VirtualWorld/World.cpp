@@ -1,5 +1,6 @@
 #include "World.h"
 #include <iostream>
+#include <algorithm>
 
 World::World(int width, int height) : width(width), height(height) {
     map.resize(width * height);
@@ -102,4 +103,14 @@ void World::MoveOrganism(Organism *organism, int x, int y) {
     tile.SetOrganism(organism);
     organism->setX(x);
     organism->setY(y);
+}
+
+void World::Update() {
+    // sort organisms by initiative
+    std::sort(organisms.begin(), organisms.end(), [](Organism* a, Organism* b) {
+        return a->getInitiative() > b->getInitiative();
+    });
+    for(Organism* organism : organisms) {
+        organism->Action();
+    }
 }

@@ -15,14 +15,6 @@ bool Human::AttackPaired(Organism &attacker) {
     return false;
 }
 
-void Human::Breed() {
-    return; // human cannot breed
-}
-
-void Human::Move() {
-    return; // human is controlled by player
-}
-
 void Human::Save(std::ofstream &file) {
 
 }

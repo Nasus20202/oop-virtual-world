@@ -20,4 +20,5 @@ public:
     int GetHeight();
     void Save(std::ofstream& file);
     void Load(std::ifstream& file);
+    void Update();
 };

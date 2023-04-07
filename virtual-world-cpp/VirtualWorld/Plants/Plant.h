@@ -4,7 +4,7 @@
 
 class Plant : public Organism {
 protected:
-    virtual void Breed() = 0;
+    void Action() override;
 public:
     Plant(int x, int y, int strength, int age, char symbol, void* world);
 };
