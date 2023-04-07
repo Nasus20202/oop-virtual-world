@@ -48,12 +48,12 @@ void Game::Input() {
             NewGame();
         else if (input == 'o') {
             string filename;
-            cout << "Enter filename: ";
+            cout << "SAVE | Enter filename: ";
             cin >> filename;
             Save(filename);
         } else if (input == 'l') {
             string filename;
-            cout << "Enter filename: ";
+            cout << "LOAD | Enter filename: ";
             cin >> filename;
             Load(filename);
         } else if (input == 'w')
@@ -84,7 +84,6 @@ void Game::Run() {
 }
 
 void Game::Initialize() {
-    bool loadGame = false;
     //cout << "Load game? (y/n): ";
     char input;
     //cin >> input;
@@ -110,7 +109,7 @@ void Game::Load(std::string filename) {
     int width, height, organismsCount;
     fread(&width, sizeof(int), 1, file);
     fread(&height, sizeof(int), 1, file);
-    NewGame(width, height);
+    NewWorld(width, height);
     fread(&round, sizeof(int), 1, file);
     fread(&alive, sizeof(bool), 1, file);
     fread(&currentX, sizeof(int), 1, file);
@@ -121,11 +120,38 @@ void Game::Load(std::string filename) {
         fread(&type, sizeof(char), 1, file);
         Organism* organism = nullptr;
         switch(type) {
-
+            case humanCode:
+                organism = new Human(0, 0, world);
+                player = (Human*)organism; break;
+            case sheepCode:
+                organism = new Sheep(0, 0, world); break;
+            case turtleCode:
+                organism = new Turtle(0, 0, world); break;
+            case wolfCode:
+                organism = new Wolf(0, 0, world); break;
+            case foxCode:
+                organism = new Fox(0, 0, world); break;
+            case antelopeCode:
+                organism = new Antelope(0, 0, world); break;
+            case dandelionCode:
+                organism = new Dandelion(0, 0, world); break;
+            case guaranaCode:
+                organism = new Guarana(0, 0, world); break;
+            case grassCode:
+                organism = new Grass(0, 0, world); break;
+            case nightshadeCode:
+                organism = new Nightshade(0, 0, world); break;
+            case sosnowskyHogweedCode:
+                organism = new SosnowskysHogweed(0, 0, world); break;
         }
         organism->Load(file);
         world->AddOrganism(organism);
     }
+    fclose(file);
+    ClearScreen();
+    Print();
+    cout << "Game loaded!" << endl;
+    Input();
 }
 
 void Game::Save(std::string filename) {
@@ -145,25 +171,27 @@ void Game::Save(std::string filename) {
     fwrite(&currentY, sizeof(int), 1, file);
     fwrite(&organismsCount, sizeof(int), 1, file);
     for(auto organism : world->GetOrganisms()) {
+        if(!organism->IsAlive())
+            continue;
         char type = organism->getSymbol();
-        fwrite(&type, sizeof(char ), 1, file);
+        fwrite(&type, sizeof(char), 1, file);
         organism->Save(file);
     }
-
+    fclose(file);
+    cout << "Game saved!" << endl;
+    Input();
 }
 
 void Game::NewGame(int width, int height) {
     ClearScreen();
-    delete world;
     if(width == -1 || height == -1) {
-        //cout << "Enter width: ";
+        //cout << "NEW GAME | Enter width: ";
         //cin >> width;
-        //cout << "Enter height: ";
+        //cout << "NEW GAME | Enter height: ";
         //cin >> height;
     }
-    width = 25;
-    height = 25;
-    world = new World(width, height);
+    width = 25, height = 25;
+    NewWorld(width, height);
     player = new Human(width/2, height/2, world);
     world->AddOrganism(player);
     world->Randomize();
@@ -173,4 +201,9 @@ void Game::NewGame(int width, int height) {
 
 void Game::ClearScreen() {
     system("cls");
+}
+
+void Game::NewWorld(int width, int height) {
+    delete world;
+    world = new World(width, height);
 }

@@ -1,5 +1,5 @@
 #pragma once
-const int typeCount = 10; // Number of types of organisms
+const int typeCount = 11; // Number of types of organisms
 
 #include "Plants\Plant.h"
 #include "Plants\Grass.h"
@@ -14,5 +14,6 @@ const int typeCount = 10; // Number of types of organisms
 #include "Animals\Fox.h"
 #include "Animals\Turtle.h"
 #include "Animals\Antelope.h"
+#include "Animals\CyberSheep.h"
 
 #include "Animals\Human.h"

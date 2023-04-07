@@ -43,11 +43,19 @@ char Organism::getSymbol() const {
 }
 
 void Organism::Save(FILE* file) {
-
+    fwrite(&x, sizeof(int), 1, file);
+    fwrite(&y, sizeof(int), 1, file);
+    fwrite(&strength, sizeof(int), 1, file);
+    fwrite(&initiative, sizeof(int), 1, file);
+    fwrite(&age, sizeof(int), 1, file);
 }
 
 void Organism::Load(FILE* file) {
-
+    fread(&x, sizeof(int), 1, file);
+    fread(&y, sizeof(int), 1, file);
+    fread(&strength, sizeof(int), 1, file);
+    fread(&initiative, sizeof(int), 1, file);
+    fread(&age, sizeof(int), 1, file);
 }
 
 void Organism::Collision(Organism* other) {

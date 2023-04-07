@@ -13,6 +13,7 @@ private:
     void Load(std::string filename);
     void Save(std::string filename);
     void NewGame(int width = -1, int height = -1);
+    void NewWorld(int width, int height);
     void Turn();
     void Print();
     void Input();
