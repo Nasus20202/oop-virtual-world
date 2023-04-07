@@ -5,6 +5,7 @@
 
 class Game {
 private:
+    static const int viewRange = 10;
     World* world = nullptr; bool running = true;
     Human* player = nullptr;
     int playerX = 0, playerY = 0;
@@ -16,6 +17,7 @@ private:
     void Print();
     void Input();
     void Update();
+    void ClearScreen();
 public:
     Game();
     ~Game();

@@ -34,3 +34,13 @@ void Human::Load(std::ifstream &file) {
 void Human::SpecialAbility() {
 
 }
+
+void Human::Move(int x, int y) {
+    World* world = (World*)this->world;
+    if (x < 0 || x >= world->GetWidth() || y < 0 || y >= world->GetHeight())
+        throw std::invalid_argument("Invalid coordinates");
+    if (world->GetOrganism(x, y) == nullptr)
+        world->MoveOrganism(this, x, y);
+    else
+        this->Collision(*(world->GetOrganism(x, y)));
+}

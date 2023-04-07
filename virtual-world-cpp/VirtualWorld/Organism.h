@@ -8,7 +8,7 @@ protected:
     int initiative;
     int age;
     char symbol;
-    void* world;
+    void* world; // World* world; must be cast to World* in every method because of circular dependency
 public:
     Organism(int x, int y, int strength, int initiative, int age, char symbol, void* world);
     virtual void Action() = 0;

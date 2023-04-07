@@ -11,4 +11,5 @@ public:
     void Save(std::ofstream& file) override;
     void Load(std::ifstream& file) override;
     void SpecialAbility();
+    void Move(int x, int y);
 };
