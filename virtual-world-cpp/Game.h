@@ -1,6 +1,7 @@
 #pragma once
 #include "VirtualWorld/World.h"
 #include <string>
+
 class Game {
 private:
     World* world = nullptr;

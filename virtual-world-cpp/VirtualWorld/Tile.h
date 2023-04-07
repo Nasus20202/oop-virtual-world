@@ -2,8 +2,8 @@
 #include "Organism.h"
 class Tile {
 private:
-    Organism* organism = nullptr;
     bool isOccupied = false;
+    Organism* organism = nullptr;
 public:
     void SetOrganism(Organism* organism);
     Organism* GetOrganism();
