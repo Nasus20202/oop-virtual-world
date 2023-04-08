@@ -89,14 +89,6 @@ int World::GetHeight() {
     return height;
 }
 
-void World::Save(std::ofstream &file) {
-    throw;
-}
-
-void World::Load(std::ifstream &file) {\
-    throw;
-}
-
 void World::MoveOrganism(Organism *organism, int x, int y) {
     if(x < 0 || x >= width || y < 0 || y >= height)
         throw std::runtime_error("Invalid coordinates");

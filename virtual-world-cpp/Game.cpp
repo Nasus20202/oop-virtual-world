@@ -15,7 +15,7 @@ void Game::Turn() {
 void Game::Print() {
     //cout << "Krzysztof Nasuta 193328\t\tControls: WASD - move, SPACE - pass, Q - quit, E - special ability, L - load, 0 - save\n\n" << endl;
     if(alive)
-        cout << "X: " << player->getX() << " Y: " << player->getY() << "\t\t\tTurn: " << round << endl;
+        cout << "X: " << player->getX() << " Y: " << player->getY() << "\t\t\tTurn: " << round << (player->ShieldActive() ? "\t\tShielded for " + std::to_string(player->GetAbilityDuration()) : "") << endl;
     else
         cout << "\t\tYou died!" << endl;
     world->Print(currentX, currentY, viewRange);
@@ -67,6 +67,14 @@ void Game::Input() {
         }
         else if (input == 'd') {
             moveX = 1; currentX++;
+        }
+        else if (input == 'e') {
+            if(!player->SpecialAbility()){
+                cout << "You can't use special ability! Wait " << player->GetAbilityCooldown() << " turns" << endl;
+            } else {
+                cout << "Shield activated for " << std::to_string(player->GetAbilityDuration()) << " turns!" << endl;
+            }
+            Input();
         }
         else if (input != ' ')
             done = false;

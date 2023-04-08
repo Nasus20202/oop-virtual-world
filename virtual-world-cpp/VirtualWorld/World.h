@@ -22,8 +22,6 @@ public:
     void MoveOrganism(Organism* organism, int x, int y);
     int GetWidth();
     int GetHeight();
-    void Save(std::ofstream& file);
-    void Load(std::ifstream& file);
     void Update();
     void RemoveDead();
     void Randomize();

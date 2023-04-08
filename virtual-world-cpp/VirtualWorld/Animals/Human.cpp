@@ -11,6 +11,12 @@ void Human::Action() {
         world->MoveOrganism(this, newX, newY);
     else
         this->Collision(world->GetOrganism(newX, newY));
+    if(abilityDuration > 0) {
+        abilityDuration--;
+    }
+    if(abilityCooldown > 0) {
+        abilityCooldown--;
+    }
 }
 
 void Human::Collision(Organism* other) {
@@ -18,11 +24,22 @@ void Human::Collision(Organism* other) {
 }
 
 bool Human::AttackPaired(Organism *attacker) {
+    bool isAnimal = dynamic_cast<Animal*>(attacker) != nullptr;
+    if(isAnimal && abilityDuration > 0) {
+        World* w = (World*)this->world;
+        w->AddMessage("Human's shield saved him from " + attacker->GetName() + "!");
+        return true;
+    }
     return false;
 }
 
-void Human::SpecialAbility() {
-
+bool Human::SpecialAbility() {
+    if(abilityCooldown > 0) {
+        return false;
+    }
+    abilityDuration = abilityDurationMax;
+    abilityCooldown = abilityCooldownMax + abilityDuration;
+    return true;
 }
 
 void Human::Move(int x, int y) {
@@ -39,4 +56,28 @@ std::string Human::GetName() {
 
 Organism *Human::Clone(int x, int y, void *world) {
     return nullptr;
+}
+
+void Human::Save(FILE *file) {
+    fwrite(&abilityDuration, sizeof(int), 1, file);
+    fwrite(&abilityCooldown, sizeof(int), 1, file);
+    Organism::Save(file);
+}
+
+void Human::Load(FILE *file) {
+    fread(&abilityDuration, sizeof(int), 1, file);
+    fread(&abilityCooldown, sizeof(int), 1, file);
+    Organism::Load(file);
+}
+
+bool Human::ShieldActive() {
+    return abilityDuration > 0;
+}
+
+int Human::GetAbilityCooldown() {
+    return abilityCooldown;
+}
+
+int Human::GetAbilityDuration() {
+    return abilityDuration;
 }

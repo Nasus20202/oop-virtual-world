@@ -19,8 +19,8 @@ public:
     virtual bool AttackPaired(Organism *attacker) = 0;
     virtual std::string GetName() = 0;
     virtual Organism* Clone(int x, int y, void* world) = 0;
-    void Save(FILE* file);
-    void Load(FILE* file);
+    virtual void Save(FILE* file);
+    virtual void Load(FILE* file);
     int getX() const;
     void setX(int x);
     int getY() const;

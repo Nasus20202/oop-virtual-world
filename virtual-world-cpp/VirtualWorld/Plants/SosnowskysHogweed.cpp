@@ -24,12 +24,10 @@ void SosnowskysHogweed::Action() {
                 Organism *o = w->GetTile(this->x + x, this->y + y)->GetOrganism();
                 if(o == nullptr)
                     continue;
-                if(dynamic_cast<SosnowskysHogweed*>(o) == nullptr) {
-                    if(dynamic_cast<CyberSheep*>(o) == nullptr) {
-                        o->Kill();
-                        w->GetTile(o->getX(), o->getY())->SetOrganism(nullptr);
-                        w->AddMessage(o->GetName() + " was killed by toxic pine borscht!");
-                    }
+                if(dynamic_cast<SosnowskysHogweed*>(o) == nullptr && dynamic_cast<CyberSheep*>(o) == nullptr){
+                    o->Kill();
+                    w->GetTile(o->getX(), o->getY())->SetOrganism(nullptr);
+                    w->AddMessage(o->GetName() + " was killed by toxic pine borscht!");
                 }
             }
         }
