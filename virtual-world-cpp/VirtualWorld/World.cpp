@@ -127,33 +127,46 @@ void World::Update() {
 }
 
 void World::Randomize() {
-    const int organismsCount = 2 + sqrt((width + height)/2)*0.1;
-    for(int i = 0; i < typeCount; i++){
-        for(int j = 0; j < organismsCount; j++) {
+    for(int type = 0; type < typeCount; type++) {
+        int count = 2 + (rand() % height)*0.05;
+        for(int i = 0; i < count; i++) {
             int x = rand() % width;
             int y = rand() % height;
-            if(!IsOccupied(x, y)) {
-                switch(i) {
+            if (!IsOccupied(x, y)) {
+                switch (type) {
                     case 0:
-                        AddOrganism(new Wolf(x, y, this)); break;
+                        AddOrganism(new Wolf(x, y, this));
+                        break;
                     case 1:
-                        AddOrganism(new Sheep(x, y, this)); break;
+                        AddOrganism(new Sheep(x, y, this));
+                        break;
                     case 2:
-                        AddOrganism(new Grass(x, y, this)); break;
+                        AddOrganism(new Grass(x, y, this));
+                        break;
                     case 3:
-                        AddOrganism(new Fox(x, y, this)); break;
+                        AddOrganism(new Fox(x, y, this));
+                        break;
                     case 4:
-                        AddOrganism(new Turtle(x, y, this)); break;
+                        AddOrganism(new Turtle(x, y, this));
+                        break;
                     case 5:
-                        AddOrganism(new Antelope(x, y, this)); break;
+                        AddOrganism(new Antelope(x, y, this));
+                        break;
                     case 6:
-                        AddOrganism(new Dandelion(x, y, this)); break;
+                        AddOrganism(new Dandelion(x, y, this));
+                        break;
                     case 7:
-                        AddOrganism(new Guarana(x, y, this)); break;
+                        AddOrganism(new Guarana(x, y, this));
+                        break;
                     case 8:
-                        AddOrganism(new Nightshade(x, y, this)); break;
+                        AddOrganism(new Nightshade(x, y, this));
+                        break;
                     case 9:
-                        AddOrganism(new SosnowskysHogweed(x, y, this)); break;
+                        AddOrganism(new SosnowskysHogweed(x, y, this));
+                        break;
+                    case 10:
+                        AddOrganism(new CyberSheep(x, y, this));
+                        break;
                 }
             }
         }

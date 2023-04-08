@@ -56,14 +56,18 @@ void Game::Input() {
             cout << "LOAD | Enter filename: ";
             cin >> filename;
             Load(filename);
-        } else if (input == 'w')
-            moveY = -1;
-        else if (input == 'a')
-            moveX = -1;
-        else if (input == 's')
-            moveY = 1;
-        else if (input == 'd')
-            moveX = 1;
+        } else if (input == 'w') {
+            moveY = -1; currentY--;
+        }
+        else if (input == 'a') {
+            moveX = -1; currentX--;
+        }
+        else if (input == 's') {
+            moveY = 1; currentY++;
+        }
+        else if (input == 'd') {
+            moveX = 1; currentX++;
+        }
         else if (input != ' ')
             done = false;
     }
@@ -143,6 +147,8 @@ void Game::Load(std::string filename) {
                 organism = new Nightshade(0, 0, world); break;
             case sosnowskyHogweedCode:
                 organism = new SosnowskysHogweed(0, 0, world); break;
+            case cyberSheepCode:
+                organism = new CyberSheep(0, 0, world); break;
         }
         organism->Load(file);
         world->AddOrganism(organism);

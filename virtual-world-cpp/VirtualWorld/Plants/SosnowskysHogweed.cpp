@@ -1,4 +1,5 @@
 #include "SosnowskysHogweed.h"
+#include "../Animals/CyberSheep.h"
 
 SosnowskysHogweed::SosnowskysHogweed(int x, int y, void *world)  : Plant(x, y, 10, 0, sosnowskyHogweedCode, world){}
 
@@ -21,10 +22,14 @@ void SosnowskysHogweed::Action() {
                 continue;
             if(w->GetTile(this->x + x, this->y + y)->GetOrganism() != nullptr){
                 Organism *o = w->GetTile(this->x + x, this->y + y)->GetOrganism();
+                if(o == nullptr)
+                    continue;
                 if(dynamic_cast<SosnowskysHogweed*>(o) == nullptr) {
-                    o->Kill();
-                    w->GetTile(o->getX(), o->getY())->SetOrganism(nullptr);
-                    w->AddMessage(o->GetName() + " was killed by toxic pine borscht!");
+                    if(dynamic_cast<CyberSheep*>(o) == nullptr) {
+                        o->Kill();
+                        w->GetTile(o->getX(), o->getY())->SetOrganism(nullptr);
+                        w->AddMessage(o->GetName() + " was killed by toxic pine borscht!");
+                    }
                 }
             }
         }
