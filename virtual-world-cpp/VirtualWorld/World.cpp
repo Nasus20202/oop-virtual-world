@@ -120,7 +120,7 @@ void World::Update() {
 
 void World::Randomize() {
     for(int type = 0; type < typeCount; type++) {
-        int count = 2 + (rand() % height)*0.05;
+        int count = 2 + sqrt(width * height) * 0.05;
         for(int i = 0; i < count; i++) {
             int x = rand() % width;
             int y = rand() % height;
@@ -179,6 +179,9 @@ void World::Empty() {
 void World::RemoveDead() {
     for(int i = 0; i < organisms.size(); i++) {
         if(!organisms[i]->IsAlive()) {
+            Tile* tile = GetTile(organisms[i]->getX(), organisms[i]->getY());
+            if(tile->GetOrganism() == organisms[i])
+                tile->SetOrganism(nullptr);
             delete organisms[i];
             organisms.erase(organisms.begin() + i);
             i--;

@@ -20,6 +20,8 @@ void Human::Action() {
 }
 
 void Human::Collision(Organism* other) {
+    if(this->AttackPaired(other))
+        return;
     Animal::Collision(other);
 }
 

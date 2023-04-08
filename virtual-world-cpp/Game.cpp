@@ -6,18 +6,21 @@
 using namespace std;
 
 void Game::Turn() {
-    Update();
+    if(round != 0) {
+        Update();
+    } else
+        round++;
     ClearScreen();
     Print();
     Input();
 }
 
 void Game::Print() {
-    //cout << "Krzysztof Nasuta 193328\t\tControls: WASD - move, SPACE - pass, Q - quit, E - special ability, L - load, 0 - save\n\n" << endl;
+    cout << "Krzysztof Nasuta 193328\t\tControls: WASD - move, SPACE - pass, Q - quit, E - special ability, L - load, O - save\n\n" << endl;
     if(alive)
         cout << "X: " << player->getX() << " Y: " << player->getY() << "\t\t\tTurn: " << round << (player->ShieldActive() ? "\t\tShielded for " + std::to_string(player->GetAbilityDuration()) : "") << endl;
     else
-        cout << "\t\tYou died!" << endl;
+        cout << "\t\tYou died!\t Turn: " << round << endl;
     world->Print(currentX, currentY, viewRange);
     cout << endl;
     world->ClearMessages();
@@ -68,7 +71,7 @@ void Game::Input() {
         else if (input == 'd') {
             moveX = 1; currentX++;
         }
-        else if (input == 'e') {
+        else if (input == 'e' && alive) {
             if(!player->SpecialAbility()){
                 cout << "You can't use special ability! Wait " << player->GetAbilityCooldown() << " turns" << endl;
             } else {
@@ -96,13 +99,12 @@ void Game::Run() {
 }
 
 void Game::Initialize() {
-    //cout << "Load game? (y/n): ";
-    char input;
-    //cin >> input;
-    input = 'n';
+    ClearScreen();
+    cout << "\n\n\tLoad game? (y/n): ";
+    char input = _getch();
     if(input == 'y'){
         string filename;
-        cout << "Enter filename: ";
+        cout << "\n\tEnter filename: ";
         cin >> filename;
         Load(filename);
     }
@@ -115,6 +117,8 @@ void Game::Load(std::string filename) {
     fopen_s(&file, filename.c_str(), "rb");
     if(file == nullptr) {
         cout << "File not found!" << endl;
+        if(world == nullptr)
+            Initialize();
         Input();
         return;
     }
@@ -199,14 +203,34 @@ void Game::Save(std::string filename) {
 void Game::NewGame(int width, int height) {
     ClearScreen();
     if(width == -1 || height == -1) {
-        //cout << "NEW GAME | Enter width: ";
-        //cin >> width;
-        //cout << "NEW GAME | Enter height: ";
-        //cin >> height;
+        while(true) {
+            ClearScreen();
+            cout << "\n\n\tNEW GAME | Enter width: ";
+            cin >> width;
+            if(cin.fail() || width < 1){
+                cin.clear();
+                cin.ignore();
+                continue;
+            }
+            break;
+        }
+        while(true) {
+            ClearScreen();
+            cout << "\n\n\tNEW GAME | Enter height: ";
+            cin >> height;
+            if(cin.fail() || height < 1){
+                cin.clear();
+                cin.ignore();
+                continue;
+            }
+            break;
+        }
+
     }
-    width = 25, height = 25;
     NewWorld(width, height);
-    player = new Human(width/2, height/2, world);
+    currentX = width/2;
+    currentY = height/2;
+    player = new Human(currentX, currentY, world);
     world->AddOrganism(player);
     world->Randomize();
     alive = true;

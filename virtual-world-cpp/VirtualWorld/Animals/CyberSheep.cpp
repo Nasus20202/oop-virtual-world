@@ -47,11 +47,14 @@ void CyberSheep::Action() {
 void CyberSheep::Collision(Organism *attacker) {
     if(dynamic_cast<SosnowskysHogweed*>(attacker) == nullptr)
         Animal::Collision(attacker);
-    attacker->Kill();
-    World* w = (World*)this->world;
-    w->AddMessage("CyberSheep destroyed " + attacker->GetName() + " at " + std::to_string(attacker->getX()) + " " + std::to_string(attacker->getY()) + "!");
-    w->GetTile(attacker->getX(), attacker->getY())->SetOrganism(nullptr);
-    w->MoveOrganism(this, attacker->getX(), attacker->getY());
+    else {
+        attacker->Kill();
+        World *w = (World *) this->world;
+        w->AddMessage("CyberSheep destroyed " + attacker->GetName() + " at " + std::to_string(attacker->getX()) + " " +
+                      std::to_string(attacker->getY()) + "!");
+        w->GetTile(attacker->getX(), attacker->getY())->SetOrganism(nullptr);
+        w->MoveOrganism(this, attacker->getX(), attacker->getY());
+    }
 }
 
 std::string CyberSheep::GetName() {
