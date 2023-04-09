@@ -6,7 +6,7 @@ Animal::Animal(int x, int y, int strength, int initiative, int age, char symbol,
 
 void Animal::Collision(Organism *other) {
     if(this->TryToBreed(other)){
-        const int minAge = 2;
+        const int minAge = 5;
         if(getAge() < minAge || other->getAge() < minAge)
             return;
         World* w = (World*)this->world;

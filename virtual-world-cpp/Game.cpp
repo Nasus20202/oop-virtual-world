@@ -18,9 +18,10 @@ void Game::Turn() {
 void Game::Print() {
     cout << "Krzysztof Nasuta 193328\t\tControls: WASD - move, SPACE - pass, Q - quit, E - special ability, L - load, O - save\n\n" << endl;
     if(alive)
-        cout << "X: " << player->getX() << " Y: " << player->getY() << "\t\t\tTurn: " << round << (player->ShieldActive() ? "\t\tShielded for " + std::to_string(player->GetAbilityDuration()) : "") << endl;
+        cout << "X: " << player->getX() << " Y: " << player->getY() << "\t\t\tTurn: " << round << (player->ShieldActive() ? "\t\tShielded for " + std::to_string(player->GetAbilityDuration()) : "");
     else
-        cout << "\t\tYou died!\t Turn: " << round << endl;
+        cout << "\t\tYou died!\t Turn: " << round;
+    cout << "\t\tOrganisms: " << world->GetOrganismCount() << endl;
     world->Print(currentX, currentY, viewRange);
     cout << endl;
     world->ClearMessages();

@@ -121,7 +121,7 @@ void World::Update() {
 void World::Randomize() {
     static const int spawnRate[] = {3, 4, 10, 4, 4, 4, 2, 1, 1, 1, 1};
     for(int type = 0; type < typeCount; type++) {
-        int count = 2 + log(width * height) * 0.01;
+        int count = 2 + log(width * height) * 0.005;
         count *= spawnRate[type];
         for(int i = 0; i < count; i++) {
             int x = rand() % width;
@@ -205,4 +205,8 @@ void World::ClearMessages() {
 
 std::vector<Organism *> &World::GetOrganisms() {
     return organisms;
+}
+
+int World::GetOrganismCount() {
+    return organisms.size();
 }

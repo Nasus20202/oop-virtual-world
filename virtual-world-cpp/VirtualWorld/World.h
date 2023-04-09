@@ -11,7 +11,6 @@ private:
 public:
     World(int width, int height);
     ~World();
-    void Empty();
     void Print(int x, int y, int range);
     Tile* GetTile(int x, int y);
     Organism* GetOrganism(int x, int y);
@@ -20,8 +19,10 @@ public:
     void AddOrganism(Organism* organism);
     void RemoveOrganism(Organism* organism);
     void MoveOrganism(Organism* organism, int x, int y);
+    int GetOrganismCount();
     int GetWidth();
     int GetHeight();
+    void Empty();
     void Update();
     void RemoveDead();
     void Randomize();

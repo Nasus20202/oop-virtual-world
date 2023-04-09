@@ -35,7 +35,9 @@ void CyberSheep::Action() {
         else if(foundY < this->y)
             dy = -1;
         Organism *other = w->GetOrganism(this->x + dx, this->y + dy);
-        if(other == nullptr || other == this)
+        if(other == this)
+            return;
+        if(other == nullptr)
             w->MoveOrganism(this, this->x + dx, this->y + dy);
         else
             this->Collision(other);
