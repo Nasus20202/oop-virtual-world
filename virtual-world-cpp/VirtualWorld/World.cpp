@@ -119,8 +119,10 @@ void World::Update() {
 }
 
 void World::Randomize() {
+    static const int spawnRate[] = {3, 4, 10, 4, 4, 4, 2, 1, 1, 1, 1};
     for(int type = 0; type < typeCount; type++) {
-        int count = 2 + sqrt(width * height) * 0.05;
+        int count = 2 + log(width * height) * 0.01;
+        count *= spawnRate[type];
         for(int i = 0; i < count; i++) {
             int x = rand() % width;
             int y = rand() % height;

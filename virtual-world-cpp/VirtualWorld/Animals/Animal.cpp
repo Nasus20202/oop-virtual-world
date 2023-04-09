@@ -6,14 +6,21 @@ Animal::Animal(int x, int y, int strength, int initiative, int age, char symbol,
 
 void Animal::Collision(Organism *other) {
     if(this->TryToBreed(other)){
-        World* w = (World*)this->world;
-        int x = -1, y = -1;
-        do {
-            x = rand() % 3 - 1 + this->x;
-            y = rand() % 3 - 1 + this->y;
-        } while (x < 0 || x >= w->GetWidth() || y < 0 || y >= w->GetHeight() || (x == this->x && y == this->y) || (x == other->getX() && y == other->getY()));
-        if(w->GetOrganism(x, y) != nullptr)
+        const int minAge = 2;
+        if(getAge() < minAge || other->getAge() < minAge)
             return;
+        World* w = (World*)this->world;
+        int x = 0, y = 0;
+        while(x == 0 && y == 0 || (x + getX() < 0 || x + getX() >= w->GetWidth() || y + getY() < 0 || y + getY() >= w->GetHeight())){
+            x = rand() % 3 - 1;
+            y = rand() % 3 - 1;
+        }
+        x += getX(); y += getY();
+        Organism *organism = w->GetOrganism(x, y);
+        if(dynamic_cast<Animal*>(organism) != nullptr) // check if there is animal
+            return;
+        if(organism != nullptr)
+            w->RemoveOrganism(organism);  // remove plant under new animal
         w->AddOrganism(this->Clone(x, y, world));
         w->AddMessage("New " + this->GetName() + " was born at " + std::to_string(x) + " " + std::to_string(y));
     }
