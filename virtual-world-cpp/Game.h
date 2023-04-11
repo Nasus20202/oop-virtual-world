@@ -18,7 +18,7 @@ private:
     void Print();
     void Input();
     void Update();
-    void ClearScreen();
+    static void ClearScreen();
 public:
     Game();
     ~Game();

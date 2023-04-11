@@ -1,7 +1,7 @@
 #include "Game.h"
 #include <iostream>
 #include <conio.h>
-#include <stdlib.h>
+#include <cstdlib>
 #include "VirtualWorld/AllOgranisms.h"
 using namespace std;
 
@@ -226,7 +226,7 @@ void Game::NewGame(int width, int height) {
             }
             break;
         }
-
+        ClearScreen();
     }
     NewWorld(width, height);
     currentX = width/2;
