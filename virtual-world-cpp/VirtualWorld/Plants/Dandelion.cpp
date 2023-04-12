@@ -1,8 +1,8 @@
 #include "Dandelion.h"
 
-Dandelion::Dandelion(int x, int y, void *world) : Plant(x, y, 0, 0, dandelionCode, world) {}
+Dandelion::Dandelion(int x, int y, World *world) : Plant(x, y, 0, 0, dandelionCode, world) {}
 
-Plant *Dandelion::Clone(int x, int y, void *world) {
+Plant *Dandelion::Clone(int x, int y, World *world) {
     return new Dandelion(x, y, world);
 }
 

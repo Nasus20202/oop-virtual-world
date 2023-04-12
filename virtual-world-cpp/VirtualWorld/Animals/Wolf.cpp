@@ -1,6 +1,6 @@
 #include "Wolf.h"
 
-Wolf::Wolf(int x, int y, void* world):
+Wolf::Wolf(int x, int y, World* world):
         Animal(x, y, 9, 5, 0, wolfCode, world) {}
 
 bool Wolf::AttackPaired(Organism *attacker) {
@@ -17,6 +17,6 @@ std::string Wolf::GetName() {
     return "Wolf";
 }
 
-Organism *Wolf::Clone(int x, int y, void *world) {
+Organism *Wolf::Clone(int x, int y, World *world) {
     return new Wolf(x, y, world);
 }

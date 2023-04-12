@@ -1,6 +1,10 @@
 #pragma once
 #include <vector>
+#include <string>
 #include "Tile.h"
+
+class Tile;
+class Organism;
 
 class World {
 private:

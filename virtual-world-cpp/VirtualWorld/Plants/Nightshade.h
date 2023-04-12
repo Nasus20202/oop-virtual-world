@@ -3,8 +3,8 @@
 
 class Nightshade : public Plant {
 public:
-    Nightshade(int x, int y, void* world);
-    Plant* Clone(int x, int y, void* world) override;
+    Nightshade(int x, int y, World* world);
+    Plant* Clone(int x, int y, World* world) override;
     std::string GetName() override;
     bool AttackPaired(Organism* attacker) override;
 };

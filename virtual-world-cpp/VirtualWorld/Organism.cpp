@@ -3,7 +3,7 @@
 #include "World.h"
 
 
-Organism::Organism(int x, int y, int strength, int initiative, int age, char symbol, void* world) : x(x), y(y), strength(strength), initiative(initiative), age(age), symbol(symbol), world(world) {
+Organism::Organism(int x, int y, int strength, int initiative, int age, char symbol, World* world) : x(x), y(y), strength(strength), initiative(initiative), age(age), symbol(symbol), world(world) {
 }
 
 int Organism::getX() const {
@@ -59,7 +59,6 @@ void Organism::Load(FILE* file) {
 }
 
 void Organism::Collision(Organism* other) {
-    World *w = (World *) this->world;
     bool thisWin = true;
     if(this == other)
         return;
@@ -70,12 +69,12 @@ void Organism::Collision(Organism* other) {
     else if(other->getStrength() == this->getStrength() && other->getAge() > this->getAge())
         thisWin = false;
     if(thisWin || other->getAge() == -1){
-        w->RemoveOrganism(other);
-        w->MoveOrganism(this, other->getX(), other->getY());
-        w->AddMessage(other->GetName()+ " was eaten by " + this->GetName() + " at " + std::to_string(other->getX()) + " " + std::to_string(other->getY()));
+        this->world->RemoveOrganism(other);
+        this->world->MoveOrganism(this, other->getX(), other->getY());
+        this->world->AddMessage(other->GetName()+ " was eaten by " + this->GetName() + " at " + std::to_string(other->getX()) + " " + std::to_string(other->getY()));
     } else {
-        w->RemoveOrganism(this);
-        w->AddMessage(this->GetName() + " was killed by " + other->GetName() + " at " + std::to_string(this->getX()) + " " + std::to_string(this->getY()));
+        this->world->RemoveOrganism(this);
+        this->world->AddMessage(this->GetName() + " was killed by " + other->GetName() + " at " + std::to_string(this->getX()) + " " + std::to_string(this->getY()));
     }
 }
 

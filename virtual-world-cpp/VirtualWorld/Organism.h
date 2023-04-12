@@ -1,6 +1,9 @@
 #pragma once
 #include "TypeCodes.h"
+#include "World.h"
 #include <string>
+
+class World;
 
 class Organism {
 protected:
@@ -9,16 +12,16 @@ protected:
     int initiative;
     int age;
     char symbol;
-    void* world; // World* world; must be cast to World* in every method because of circular dependency
+    World* world;
     bool alive = true;
 public:
     virtual ~Organism();
-    Organism(int x, int y, int strength, int initiative, int age, char symbol, void* world);
+    Organism(int x, int y, int strength, int initiative, int age, char symbol, World* world);
     virtual void Action() = 0;
     virtual void Collision(Organism *other);
     virtual bool AttackPaired(Organism *attacker) = 0;
     virtual std::string GetName() = 0;
-    virtual Organism* Clone(int x, int y, void* world) = 0;
+    virtual Organism* Clone(int x, int y, World* world) = 0;
     virtual void Save(FILE* file);
     virtual void Load(FILE* file);
     int getX() const;

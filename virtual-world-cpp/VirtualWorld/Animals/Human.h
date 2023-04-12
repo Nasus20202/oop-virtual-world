@@ -5,7 +5,7 @@ class Human : public Animal {
     const int abilityCooldownMax = 5, abilityDurationMax = 5;
     int abilityCooldown = 0, abilityDuration = 0;
 public:
-    Human(int x, int y, void* world);
+    Human(int x, int y, World* world);
     void Action() override;
     void Collision(Organism *other) override;
     bool AttackPaired(Organism *attacker) override;
@@ -18,5 +18,5 @@ public:
     int GetAbilityDuration();
     void Move(int x, int y);
     std::string GetName() override;
-    Organism* Clone(int x, int y, void* world) override;
+    Organism* Clone(int x, int y, World* world) override;
 };

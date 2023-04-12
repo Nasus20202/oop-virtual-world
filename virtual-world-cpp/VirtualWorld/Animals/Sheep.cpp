@@ -1,6 +1,6 @@
 #include "Sheep.h"
 
-Sheep::Sheep(int x, int y, void* world):
+Sheep::Sheep(int x, int y, World* world):
 Animal(x, y, 4, 4, 0, sheepCode, world) {}
 
 bool Sheep::AttackPaired(Organism *attacker) {
@@ -17,6 +17,6 @@ std::string Sheep::GetName() {
     return "Sheep";
 }
 
-Organism *Sheep::Clone(int x, int y, void *world) {
+Organism *Sheep::Clone(int x, int y, World *world) {
     return new Sheep(x, y, world);
 }

@@ -1,9 +1,8 @@
 #include "Human.h"
 
-Human::Human(int x, int y, void* world) : Animal(x, y, 5, 4, 0, humanCode, world) {
+Human::Human(int x, int y, World* world) : Animal(x, y, 5, 4, 0, humanCode, world) {
 }
 void Human::Action() {
-    World* world = (World*)this->world;
     int newX = this->x + moveX, newY = this->y + moveY;
     if (newX < 0 || newX >= world->GetWidth() || newY < 0 || newY >= world->GetHeight())
         return;
@@ -28,8 +27,7 @@ void Human::Collision(Organism* other) {
 bool Human::AttackPaired(Organism *attacker) {
     bool isAnimal = dynamic_cast<Animal*>(attacker) != nullptr;
     if(isAnimal && abilityDuration > 0) {
-        World* w = (World*)this->world;
-        w->AddMessage("Human's shield saved him from " + attacker->GetName() + "!");
+        world->AddMessage("Human's shield saved him from " + attacker->GetName() + "!");
         return true;
     }
     return false;
@@ -56,7 +54,7 @@ std::string Human::GetName() {
     return "Human";
 }
 
-Organism *Human::Clone(int x, int y, void *world) {
+Organism *Human::Clone(int x, int y, World *world) {
     return nullptr;
 }
 
