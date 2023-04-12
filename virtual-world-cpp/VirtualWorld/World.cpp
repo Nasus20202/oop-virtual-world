@@ -1,6 +1,7 @@
 #include "World.h"
 #include <iostream>
 #include <algorithm>
+#include <queue>
 #include "AllOgranisms.h"
 
 World::World(int width, int height) : width(width), height(height) {
@@ -103,14 +104,19 @@ void World::MoveOrganism(Organism *organism, int x, int y) {
 }
 
 void World::Update() {
-    // sort organisms by initiative
-    std::sort(organisms.begin(), organisms.end(), [](Organism* a, Organism* b) {
-        if(a->getInitiative() == b->getInitiative())
-            return a->getAge() > b->getAge();
-        return a->getInitiative() > b->getInitiative();
-    });
-    for(int i = 0; i < organisms.size(); i++) {
-        Organism* organism = organisms[i];
+    struct OrganismComparator {
+        bool operator()(Organism *a, Organism *b) {
+            if(a->getInitiative() == b->getInitiative())
+                return a->getAge() < b->getAge();
+            return a->getInitiative() < b->getInitiative();
+        }
+    };
+    std::priority_queue<Organism*, std::vector<Organism*>, OrganismComparator> queue;
+    for(Organism *organism : organisms)
+        queue.push(organism);
+    while(!queue.empty()) {
+        Organism *organism = queue.top();
+        queue.pop();
         if(!organism->IsAlive())
             continue;
         organism->Action();
