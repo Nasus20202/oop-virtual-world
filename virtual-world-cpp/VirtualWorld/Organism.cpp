@@ -68,7 +68,7 @@ void Organism::Collision(Organism* other) {
         thisWin = false;
     else if(other->getStrength() == this->getStrength() && other->getAge() > this->getAge())
         thisWin = false;
-    if(thisWin || other->getAge() == -1){
+    if(thisWin || !other->IsAlive()){
         this->world->RemoveOrganism(other);
         this->world->MoveOrganism(this, other->getX(), other->getY());
         this->world->AddMessage(other->GetName()+ " was eaten by " + this->GetName() + " at " + std::to_string(other->getX()) + " " + std::to_string(other->getY()));
