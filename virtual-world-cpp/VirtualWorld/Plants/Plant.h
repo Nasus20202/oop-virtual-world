@@ -3,7 +3,7 @@
 #include "../World.h"
 
 class Plant : public Organism {
-    static const int seedingProbability = 7;
+    static const int seedingProbability = 4;
 public:
     ~Plant() override;
     void Action() override;
