@@ -13,6 +13,7 @@ public class Map extends JPanel {
         super();
         this.world = world;
         this.setBorder(BorderFactory.createLineBorder(Color.black));
+        //this.setBackground(Color.BLACK);
     }
     public Map() {
         this(null);

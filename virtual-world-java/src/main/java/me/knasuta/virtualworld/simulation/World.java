@@ -110,6 +110,7 @@ public class World {
         }
         return adjacentPoints;
     }
+
     public Point GetRandomAdjacentPoint(Point location) {
         Vector<Point> adjacentPoints = this.GetAdjacentPoints(location);
         if(adjacentPoints.size() == 0) {
@@ -123,6 +124,13 @@ public class World {
         organismCounts[OrganismType.WOLF.ordinal()] = 3;
         organismCounts[OrganismType.SHEEP.ordinal()] = 4;
         organismCounts[OrganismType.GRASS.ordinal()] = 4;
+        organismCounts[OrganismType.ANTELOPE.ordinal()] = 4;
+        organismCounts[OrganismType.FOX.ordinal()] = 4;
+        organismCounts[OrganismType.TURTLE.ordinal()] = 4;
+        organismCounts[OrganismType.DANDELION.ordinal()] = 2;
+        organismCounts[OrganismType.GUARANA.ordinal()] = 1;
+        organismCounts[OrganismType.NIGHTSHADE.ordinal()] = 1;
+        organismCounts[OrganismType.SOSNOWSKY_HOGWEED.ordinal()] = 1;
         int baseOrganismCount = (int)(2 + Math.log(width * height) * 0.005f);
         IOrganismFactory factory = OrganismFactory.getInstance();
         for(OrganismType organismType : OrganismType.values()) {

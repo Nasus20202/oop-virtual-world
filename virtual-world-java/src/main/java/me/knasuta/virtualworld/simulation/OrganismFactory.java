@@ -11,6 +11,13 @@ public class OrganismFactory implements IOrganismFactory {
         organisms[OrganismType.WOLF.ordinal()] = new Wolf(new Point(0, 0), null);
         organisms[OrganismType.SHEEP.ordinal()] = new Sheep(new Point(0, 0), null);
         organisms[OrganismType.GRASS.ordinal()] = new Grass(new Point(0, 0), null);
+        organisms[OrganismType.ANTELOPE.ordinal()] = new Antelope(new Point(0, 0), null);
+        organisms[OrganismType.FOX.ordinal()] = new Fox(new Point(0, 0), null);
+        organisms[OrganismType.TURTLE.ordinal()] = new Turtle(new Point(0, 0), null);
+        organisms[OrganismType.DANDELION.ordinal()] = new Dandelion(new Point(0, 0), null);
+        organisms[OrganismType.GUARANA.ordinal()] = new Guarana(new Point(0, 0), null);
+        organisms[OrganismType.NIGHTSHADE.ordinal()] = new Nightshade(new Point(0, 0), null);
+        organisms[OrganismType.SOSNOWSKY_HOGWEED.ordinal()] = new SosnowskysHogweed(new Point(0, 0), null);
     }
 
     public static OrganismFactory getInstance() {

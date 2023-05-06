@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class Grass extends Plant {
     public Grass(Point location, World world){
-        super(location, 0, 0, 0, world);
+        super(location, 0, 0, world);
     }
 
     @Override
@@ -23,6 +23,6 @@ public class Grass extends Plant {
 
     @Override
     public Color getColor() {
-        return new Color(0, 96, 0);
+        return new Color(0, 128, 0);
     }
 }
