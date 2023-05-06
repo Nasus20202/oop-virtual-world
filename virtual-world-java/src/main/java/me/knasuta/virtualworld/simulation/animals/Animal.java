@@ -29,4 +29,12 @@ public abstract class Animal extends Organism {
         else
             super.Collision(other);
     }
+
+    @Override
+    public void Action(){
+        Point newLocation = world.GetRandomAdjacentPoint(this.location);
+        if(newLocation != null){
+            world.MoveOrganism(this, newLocation);
+        }
+    }
 }

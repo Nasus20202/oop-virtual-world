@@ -33,7 +33,7 @@ public abstract class Organism {
             thisWon = false;
         if(thisWon || !other.IsAlive()){
             this.world.RemoveOrganism(other);
-            this.world.MoveOrganism(this, other,getLocation());
+            this.world.MoveOrganism(this, other.getLocation());
             this.world.AddMessage(this.getName() + " was eaten by " + other.getName() + " at " + this.getLocation().toString());
         }
         else{

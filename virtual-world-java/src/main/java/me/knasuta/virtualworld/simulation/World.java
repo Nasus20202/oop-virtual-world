@@ -1,5 +1,8 @@
 package me.knasuta.virtualworld.simulation;
 
+import me.knasuta.virtualworld.simulation.animals.*;
+import me.knasuta.virtualworld.simulation.plants.*;
+
 import java.util.Vector;
 
 public class World {
@@ -51,16 +54,16 @@ public class World {
         this.organisms.remove(organism);
         this.organismMap[organism.getX()][organism.getY()] = null;
     }
-    public void MoveOrganism(Organism organism, int x, int y) throws Exception {
+    public void MoveOrganism(Organism organism, int x, int y)  {
         if(this.IsOccupied(x, y)) {
-            throw new Exception("Cannot move organism to occupied space");
+            return;
         }
         this.organismMap[organism.getX()][organism.getY()] = null;
         this.organismMap[x][y] = organism;
         organism.setX(x);
         organism.setY(y);
     }
-    public void MoveOrganism(Organism organism, Point point) throws Exception {
+    public void MoveOrganism(Organism organism, Point point)  {
         this.MoveOrganism(organism, point.getX(), point.getY());
     }
     public int getWidth() {
@@ -89,8 +92,7 @@ public class World {
             }
         }
     }
-
-    public Point GetRandomAdjacentPoint(Point location) {
+    public Vector<Point> GetAdjacentPoints(Point location){
         Vector<Point> adjacentPoints = new Vector<Point>();
         for(int x = location.getX() - 1; x <= location.getX() + 1; x++) {
             for(int y = location.getY() - 1; y <= location.getY() + 1; y++) {
@@ -103,9 +105,28 @@ public class World {
                 }
             }
         }
+        return adjacentPoints;
+    }
+    public Point GetRandomAdjacentPoint(Point location) {
+        Vector<Point> adjacentPoints = this.GetAdjacentPoints(location);
         if(adjacentPoints.size() == 0) {
             return null;
         }
         return adjacentPoints.get((int)(Math.random() * adjacentPoints.size()));
+    }
+
+    public void AddStartingOrganisms(){
+        int[] organismCounts = new int[OrganismType.values().length];
+        organismCounts[OrganismType.WOLF.ordinal()] = 3;
+        organismCounts[OrganismType.SHEEP.ordinal()] = 4;
+
+        IOrganismFactory factory = OrganismFactory.getInstance();
+        for(OrganismType organismType : OrganismType.values()) {
+            for(int i = 0; i < organismCounts[organismType.ordinal()]; i++) {
+                int x = (int)(Math.random() * this.width);
+                int y = (int)(Math.random() * this.height);
+                this.AddOrganism(factory.Create(organismType, new Point(x, y), this));
+            }
+        }
     }
 }
