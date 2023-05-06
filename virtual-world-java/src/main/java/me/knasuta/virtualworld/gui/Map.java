@@ -9,18 +9,19 @@ import java.awt.*;
 public class Map extends JPanel {
     private static int organismSize = 10;
     World world;
-    public Map() {
-        super();
-        this.world = null;
-    }
     public Map(World world) {
         super();
         this.world = world;
+        this.setBorder(BorderFactory.createLineBorder(Color.black));
+    }
+    public Map() {
+        this(null);
     }
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (this.world != null) {
+        if(this.world != null) {
+            setSize(world.getWidth()*organismSize, world.getHeight()*organismSize);
             DrawWorld(g);
         }
     }
@@ -40,5 +41,11 @@ public class Map extends JPanel {
 
     public void setWorld(World world) {
         this.world = world;
+    }
+
+    public void Update(){
+        this.invalidate();
+        this.validate();
+        this.repaint();
     }
 }

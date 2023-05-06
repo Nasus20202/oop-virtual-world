@@ -1,8 +1,5 @@
 package me.knasuta.virtualworld.simulation;
 
-import me.knasuta.virtualworld.simulation.animals.*;
-import me.knasuta.virtualworld.simulation.plants.*;
-
 import java.util.Vector;
 
 public class World {
@@ -18,9 +15,11 @@ public class World {
         this.turn++;
         this.ClearMessages();
         this.organisms.sort(new Organism.Comparator());
-        for(Organism organism : this.organisms) {
+        for(int i = 0; i < organisms.size(); i++) {
+            Organism organism = organisms.get(i);
             if(organism.IsAlive())
                 organism.Action();
+            organism.setAge(organism.getAge()+1);
         }
         this.RemoveDeadOrganisms();
     }
@@ -42,6 +41,9 @@ public class World {
             throw new IndexOutOfBoundsException("Cannot get organism outside of world");
         }
         return this.organismMap[x][y];
+    }
+    public Organism getOrganism(Point point){
+        return getOrganism(point.getX(), point.getY());
     }
     public boolean IsOccupied(int x, int y) {
         return this.organismMap[x][y] != null;
@@ -79,6 +81,7 @@ public class World {
         return this.hexagonal;
     }
     public void AddMessage(String message) {
+
         this.messages.add(message);
     }
     public Vector<String> getMessages() {
@@ -90,7 +93,7 @@ public class World {
     public void RemoveDeadOrganisms() {
         for(int i = 0; i < this.organisms.size(); i++) {
             if(!this.organisms.get(i).IsAlive()) {
-                this.RemoveOrganism(this.organisms.get(i));
+                organisms.remove(i);
                 i--;
             }
         }
@@ -102,9 +105,7 @@ public class World {
                 if(x >= 0 && x < this.width && y >= 0 && y < this.height && (x != location.getX() || y != location.getY())) {
                     if(this.hexagonal && (x == location.getX() - 1 && y == location.getY() + 1 || x == location.getX() + 1 && y == location.getY() - 1))
                         continue;
-                    if(!this.IsOccupied(x, y)) {
-                        adjacentPoints.add(new Point(x, y));
-                    }
+                    adjacentPoints.add(new Point(x, y));
                 }
             }
         }

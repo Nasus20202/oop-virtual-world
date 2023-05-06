@@ -14,6 +14,8 @@ public class MainWindow extends JFrame {
     private Map map;
     private JMenuBar menuBar;
     private JMenuItem loadButton, saveButton, newGameButton;
+    private JButton nextTurnButton;
+    private TextArea logs;
     public MainWindow() {
         InitComponents();
     }
@@ -37,6 +39,13 @@ public class MainWindow extends JFrame {
         this.add(this.bottomPanel, BorderLayout.SOUTH);
         this.add(this.map, BorderLayout.CENTER);
 
+        nextTurnButton = new JButton("Next turn");
+        nextTurnButton.addActionListener(e -> NextTurn());
+        bottomPanel.add(nextTurnButton);
+
+        logs = new TextArea();
+        rightPanel.add(logs);
+
         menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
         newGameButton = new JMenuItem("New Game");
@@ -50,20 +59,26 @@ public class MainWindow extends JFrame {
         this.setJMenuBar(menuBar);
     }
 
-    protected void NewGame() {
+    private void NewGame() {
         NewGameWindow newGameWindow = new NewGameWindow(this);
     }
     public void NewGameCallback(int width, int height, boolean hex){
         world = new World(width, height, hex);
         world.AddStartingOrganisms();
         map.setWorld(world);
-        UpdateMap();
+        Update();
     }
-
-    private void UpdateMap() {
-        map.invalidate();
-        map.validate();
-        map.repaint();
+    private void NextTurn(){
+        world.Update();
+        Update();
+    }
+    private void Update(){
+        map.Update();
+        String log = "";
+        for(String message : world.getMessages()){
+            log += message + '\n';
+        }
+        logs.setText(log);
     }
 }
 

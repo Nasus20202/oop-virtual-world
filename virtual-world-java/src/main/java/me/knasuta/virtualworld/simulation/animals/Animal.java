@@ -34,7 +34,12 @@ public abstract class Animal extends Organism {
     public void Action(){
         Point newLocation = world.GetRandomAdjacentPoint(this.location);
         if(newLocation != null){
-            world.MoveOrganism(this, newLocation);
+            Organism other = world.getOrganism(newLocation);
+            if(other == null) {
+                world.MoveOrganism(this, newLocation);
+            } else {
+                Collision(other);
+            }
         }
     }
 }
