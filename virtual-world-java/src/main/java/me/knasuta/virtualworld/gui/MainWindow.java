@@ -1,6 +1,7 @@
 package me.knasuta.virtualworld.gui;
 
 import me.knasuta.virtualworld.simulation.MovementType;
+import me.knasuta.virtualworld.simulation.Point;
 import me.knasuta.virtualworld.simulation.World;
 import me.knasuta.virtualworld.simulation.animals.Human;
 

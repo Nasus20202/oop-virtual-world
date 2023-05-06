@@ -1,19 +1,23 @@
 package me.knasuta.virtualworld.gui;
 
 import me.knasuta.virtualworld.simulation.Organism;
+import me.knasuta.virtualworld.simulation.Point;
 import me.knasuta.virtualworld.simulation.World;
 import me.knasuta.virtualworld.simulation.animals.Human;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class Map extends JPanel {
+public class Map extends JPanel implements MouseListener {
     private static final int rectangleSize = 10;
     private static final int hexagonSize = 8;
     World world;
     public Map(World world) {
         super();
         setWorld(world);
+        addMouseListener(this);
     }
     public Map() {
         this(null);
@@ -71,5 +75,54 @@ public class Map extends JPanel {
         this.invalidate();
         this.validate();
         this.repaint();
+    }
+
+    private void HandleMouseClick(MouseEvent e){
+        if(world == null)
+            return;
+        int x = e.getX();
+        int y = e.getY();
+        if(world.IsHexagonal()){
+            int hexagonY = (int) ((y - hexagonSize) / (hexagonSize * 2));
+            int hexagonX = (int) ((x - hexagonSize - hexagonY*hexagonSize*Math.sqrt(3)/2.0) / (hexagonSize * Math.sqrt(3)));
+            if(hexagonX < 0 || hexagonX >= world.getWidth() || hexagonY < 0 || hexagonY >= world.getHeight())
+                return;
+            AddOrganismWindow addOrganismWindow = new AddOrganismWindow(world, new Point(hexagonX, hexagonY), this);
+        } else {
+            int rectangleX = x / rectangleSize;
+            int rectangleY = y / rectangleSize;
+            if(rectangleX < 0 || rectangleX >= world.getWidth() || rectangleY < 0 || rectangleY >= world.getHeight())
+                return;
+            AddOrganismWindow addOrganismWindow = new AddOrganismWindow(world, new Point(rectangleX, rectangleY), this);
+        }
+    }
+
+    public void OrganismAddedCallback(){
+        this.Update();
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        HandleMouseClick(e);
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
     }
 }
