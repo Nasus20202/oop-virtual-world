@@ -62,6 +62,7 @@ public class World {
         this.organismMap[organism.getX()][organism.getY()] = organism;
     }
     public void RemoveOrganism(Organism organism) {
+        organism.Kill();
         this.organisms.remove(organism);
         this.organismMap[organism.getX()][organism.getY()] = null;
     }

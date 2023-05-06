@@ -2,6 +2,7 @@ package me.knasuta.virtualworld.gui;
 
 import me.knasuta.virtualworld.simulation.MovementType;
 import me.knasuta.virtualworld.simulation.World;
+import me.knasuta.virtualworld.simulation.animals.Human;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +18,8 @@ public class MainWindow extends JFrame {
     private JScrollPane scrollPane;
     private JMenuBar menuBar;
     private JMenuItem loadButton, saveButton, newGameButton;
-    private JButton nextTurnButton;
+    private JButton nextTurnButton, abilityButton;
+    private JLabel abilityLabel;
     private JComboBox directionComboBox;
 
     private TextArea logs;
@@ -72,10 +74,32 @@ public class MainWindow extends JFrame {
         directionComboBox = new JComboBox();
         bottomPanel.add(directionComboBox);
 
+        abilityButton = new JButton("Use shield");
+        abilityButton.addActionListener(e -> UseAbility());
+        bottomPanel.add(abilityButton);
+
+        abilityLabel = new JLabel();
+        bottomPanel.add(abilityLabel);
+
         KeyboardFocusManager keyboardFocusManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         keyboardFocusManager.addKeyEventDispatcher(new KeyboardDispatcher());
 
         setVisible(true);
+    }
+
+    private void UseAbility(){
+        if(world == null)
+            return;
+        Human player = world.getPlayer();
+        if(!player.IsAlive()){
+            JOptionPane.showMessageDialog(this, "You are dead!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if(!player.isAbilityReady()){
+            JOptionPane.showMessageDialog(this, "Ability is not ready yet! Wait for " + player.getAbilityCooldown() + " turns." , "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            world.getPlayer().UseAbility();
+        }
     }
 
     private void NewGame() {
@@ -93,9 +117,9 @@ public class MainWindow extends JFrame {
         directionComboBox.removeAllItems();
         String[] directions;
         if(world.IsHexagonal()){
-            directions = new String[]{"NONE","UP LEFT", "UP RIGHT", "LEFT", "RIGHT", "DOWN LEFT", "DOWN RIGHT"};
+            directions = new String[]{"NONE (R)","UP LEFT (Q)", "UP RIGHT (W)", "LEFT (A)", "RIGHT (S)", "DOWN LEFT (Z)", "DOWN RIGHT (X)"};
         } else {
-            directions = new String[]{"NONE", "UP", "LEFT", "RIGHT", "DOWN"};
+            directions = new String[]{"NONE (R)", "UP (W)", "LEFT (A)", "RIGHT (D)", "DOWN (S)"};
         }
         for(String direction : directions){
             directionComboBox.addItem(direction);
@@ -136,6 +160,20 @@ public class MainWindow extends JFrame {
             log += message + '\n';
         }
         logs.setText(log);
+        Human player = world.getPlayer();
+        String abilityText;
+        if(!player.IsAlive()){
+            abilityText = "You are dead!";
+        } else {
+            if(player.isAbilityActive()){
+                abilityText = "Ability active! Active for " + player.getAbilityDuration() + " turns.";
+            } else if(player.isAbilityReady()){
+                abilityText = "Ability ready!";
+            } else {
+                abilityText = "Ability not ready! Wait for " + player.getAbilityCooldown() + " turns.";
+            }
+        }
+        abilityLabel.setText(abilityText);
     }
 
     private void HandleKeyPress(KeyEvent e){
