@@ -12,8 +12,7 @@ public class Map extends JPanel {
     World world;
     public Map(World world) {
         super();
-        this.world = world;
-
+        setWorld(world);
     }
     public Map() {
         this(null);
@@ -55,6 +54,12 @@ public class Map extends JPanel {
 
     public void setWorld(World world) {
         this.world = world;
+        if(world == null)
+            return;
+        if(world.IsHexagonal())
+            setPreferredSize(new Dimension(hexagonSize * (world.getWidth() + 1) * 3, (int)(hexagonSize * (world.getHeight() + 1) * 2)));
+        else
+            setPreferredSize(new Dimension(world.getWidth() * rectangleSize, world.getHeight() * rectangleSize));
     }
 
     public void Update(){

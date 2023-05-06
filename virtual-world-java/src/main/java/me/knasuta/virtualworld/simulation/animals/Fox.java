@@ -24,7 +24,7 @@ public class Fox extends Animal {
             if(other == null) {
                 world.MoveOrganism(this, newLocation);
             } else {
-                if(this.getStrength() >= other.getStrength())
+                if(this.getStrength() >= other.getStrength() || other instanceof Fox)
                     Collision(other);
                 else
                     world.AddMessage("Fox's great smell saved him from " + other.getName() + " at " + location.toString());

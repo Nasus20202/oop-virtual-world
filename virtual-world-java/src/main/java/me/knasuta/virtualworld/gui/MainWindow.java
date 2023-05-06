@@ -12,6 +12,7 @@ public class MainWindow extends JFrame {
     private String title = "Virtual World - Krzysztof Nasuta 193328";
     private JPanel rightPanel, leftPanel, bottomPanel;
     private Map map;
+    private JScrollPane scrollPane;
     private JMenuBar menuBar;
     private JMenuItem loadButton, saveButton, newGameButton;
     private JButton nextTurnButton;
@@ -29,14 +30,19 @@ public class MainWindow extends JFrame {
         this.rightPanel = new JPanel();
         this.leftPanel = new JPanel();
         this.bottomPanel = new JPanel();
+
         this.map = new Map();
+        scrollPane = new JScrollPane(map);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
         leftPanel.setPreferredSize(new Dimension(200, 0));
         rightPanel.setPreferredSize(new Dimension(300, 0));
         bottomPanel.setPreferredSize(new Dimension(0, 50));
         this.add(this.leftPanel, BorderLayout.WEST);
         this.add(this.rightPanel, BorderLayout.EAST);
         this.add(this.bottomPanel, BorderLayout.SOUTH);
-        this.add(this.map, BorderLayout.CENTER);
+        this.add(scrollPane, BorderLayout.CENTER);
 
         nextTurnButton = new JButton("Next turn");
         nextTurnButton.addActionListener(e -> NextTurn());
@@ -68,6 +74,8 @@ public class MainWindow extends JFrame {
         world = new World(width, height, hex);
         world.AddStartingOrganisms();
         map.setWorld(world);
+        scrollPane.revalidate();
+        scrollPane.repaint();
         Update();
     }
     private void NextTurn(){
