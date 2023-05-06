@@ -33,6 +33,7 @@ public class MainWindow extends JFrame {
         rightPanel.setPreferredSize(new Dimension(200, 0));
         bottomPanel.setPreferredSize(new Dimension(0, 50));
         this.add(this.leftPanel, BorderLayout.WEST);
+        this.add(this.rightPanel, BorderLayout.EAST);
         this.add(this.bottomPanel, BorderLayout.SOUTH);
         this.add(this.map, BorderLayout.CENTER);
 
@@ -54,7 +55,15 @@ public class MainWindow extends JFrame {
     }
     public void NewGameCallback(int width, int height, boolean hex){
         world = new World(width, height, hex);
-        map = new Map(world);
+        world.AddStartingOrganisms();
+        map.setWorld(world);
+        UpdateMap();
+    }
+
+    private void UpdateMap() {
+        map.invalidate();
+        map.validate();
+        map.repaint();
     }
 }
 

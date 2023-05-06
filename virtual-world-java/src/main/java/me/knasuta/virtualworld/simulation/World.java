@@ -75,6 +75,9 @@ public class World {
     public int getTurn() {
         return this.turn;
     }
+    public boolean IsHexagonal() {
+        return this.hexagonal;
+    }
     public void AddMessage(String message) {
         this.messages.add(message);
     }
@@ -128,5 +131,9 @@ public class World {
                 this.AddOrganism(factory.Create(organismType, new Point(x, y), this));
             }
         }
+    }
+
+    public Vector<Organism> getOrganisms() {
+        return this.organisms;
     }
 }

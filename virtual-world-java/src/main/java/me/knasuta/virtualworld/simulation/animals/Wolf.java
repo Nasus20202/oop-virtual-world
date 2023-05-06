@@ -23,7 +23,7 @@ public class Wolf extends Animal {
 
     @Override
     public Organism Clone(Point location, World world) {
-        return OrganismFactory.getInstance().Create(OrganismType.WOLF, location, world);
+        return new Wolf(location, world);
     }
 
     @Override

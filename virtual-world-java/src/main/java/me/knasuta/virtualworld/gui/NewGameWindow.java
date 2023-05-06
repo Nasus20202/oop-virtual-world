@@ -52,12 +52,12 @@ public class NewGameWindow  extends JFrame{
             int width = Integer.parseInt(widthField.getText());
             int height = Integer.parseInt(heightField.getText());
             if(width < 1 || height < 1) throw new NumberFormatException();
+            boolean hex = hexCheckBox.isSelected();
+            mainWindow.NewGameCallback(width, height, hex);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Invalid width or height", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        boolean hex = hexCheckBox.isSelected();
-        mainWindow.NewGameCallback(width, height, hex);
         dispose();
     }
 
