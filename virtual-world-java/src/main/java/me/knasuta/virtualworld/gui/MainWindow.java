@@ -1,5 +1,6 @@
 package me.knasuta.virtualworld.gui;
 
+import me.knasuta.virtualworld.simulation.MovementType;
 import me.knasuta.virtualworld.simulation.World;
 
 import javax.swing.*;
@@ -16,6 +17,8 @@ public class MainWindow extends JFrame {
     private JMenuBar menuBar;
     private JMenuItem loadButton, saveButton, newGameButton;
     private JButton nextTurnButton;
+    private JComboBox directionComboBox;
+
     private TextArea logs;
     public MainWindow() {
         InitComponents();
@@ -64,6 +67,8 @@ public class MainWindow extends JFrame {
         menuBar.add(fileMenu);
         this.setJMenuBar(menuBar);
 
+        directionComboBox = new JComboBox();
+        bottomPanel.add(directionComboBox);
         setVisible(true);
     }
 
@@ -72,15 +77,49 @@ public class MainWindow extends JFrame {
     }
     public void NewGameCallback(int width, int height, boolean hex){
         world = new World(width, height, hex);
+         PrepareForNewGame();
+    }
+    private void PrepareForNewGame(){
         world.AddStartingOrganisms();
         map.setWorld(world);
         scrollPane.revalidate();
         scrollPane.repaint();
+        directionComboBox.removeAllItems();
+        String[] directions;
+        if(world.IsHexagonal()){
+            directions = new String[]{"NONE","UP LEFT", "UP RIGHT", "LEFT", "RIGHT", "DOWN LEFT", "DOWN RIGHT"};
+        } else {
+            directions = new String[]{"NONE", "UP", "LEFT", "RIGHT", "DOWN"};
+        }
+        for(String direction : directions){
+            directionComboBox.addItem(direction);
+        }
         Update();
     }
     private void NextTurn(){
         if(world == null)
             return;
+        int direction = directionComboBox.getSelectedIndex();
+        MovementType movementType = MovementType.NONE;
+        if(world.IsHexagonal()){
+            switch (direction) {
+                case 1 -> movementType = MovementType.UP_LEFT;
+                case 2 -> movementType = MovementType.UP_RIGHT;
+                case 3 -> movementType = MovementType.LEFT;
+                case 4 -> movementType = MovementType.RIGHT;
+                case 5 -> movementType = MovementType.DOWN_LEFT;
+                case 6 -> movementType = MovementType.DOWN_RIGHT;
+
+            }
+        } else {
+            switch (direction) {
+                case 1 -> movementType = MovementType.UP;
+                case 2 -> movementType = MovementType.LEFT;
+                case 3 -> movementType = MovementType.RIGHT;
+                case 4 -> movementType = MovementType.DOWN;
+            }
+        }
+        world.getPlayer().setDirection(movementType);
         world.Update();
         Update();
     }

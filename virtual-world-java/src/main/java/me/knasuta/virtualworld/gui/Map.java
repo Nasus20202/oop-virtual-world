@@ -2,6 +2,7 @@ package me.knasuta.virtualworld.gui;
 
 import me.knasuta.virtualworld.simulation.Organism;
 import me.knasuta.virtualworld.simulation.World;
+import me.knasuta.virtualworld.simulation.animals.Human;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,23 +31,27 @@ public class Map extends JPanel {
             if(world.IsHexagonal()){
                 int x = hexagonSize +(int)(organism.getX() * hexagonSize * Math.sqrt(3) + organism.getY() * hexagonSize * Math.sqrt(3)/2.0);
                 int y = hexagonSize + organism.getY() * hexagonSize * 2;
-                DrawHexagon(g, x, y, organism.getColor());
+                DrawHexagon(g, x, y, organism.getColor(), hexagonSize);
             } else {
                 int x = organism.getX() * rectangleSize;
                 int y = organism.getY() * rectangleSize;
-                g.setColor(organism.getColor());
-                g.fillRect(x, y, rectangleSize, rectangleSize);
+                DrawRectangle(g, x, y, organism.getColor(), rectangleSize);
             }
         }
     }
 
-    private void DrawHexagon(Graphics g, int x, int y, Color color){
+    private void DrawRectangle(Graphics g, int x, int y, Color color, int size){
+        g.setColor(color);
+        g.fillRect(x, y, size, size);
+    }
+
+    private void DrawHexagon(Graphics g, int x, int y, Color color, int size){
         int[] xPoints = new int[6];
         int[] yPoints = new int[6];
         for(int i = 0; i < 6; i++){
             double angle = 2 * Math.PI / 6 * i + Math.PI / 6;
-            xPoints[i] = (int) (x + hexagonSize * Math.cos(angle));
-            yPoints[i] = (int) (y + hexagonSize * Math.sin(angle));
+            xPoints[i] = (int) (x + size * Math.cos(angle));
+            yPoints[i] = (int) (y + size * Math.sin(angle));
         }
         g.setColor(color);
         g.fillPolygon(xPoints, yPoints, 6);

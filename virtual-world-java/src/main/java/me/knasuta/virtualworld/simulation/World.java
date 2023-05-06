@@ -1,5 +1,7 @@
 package me.knasuta.virtualworld.simulation;
 
+import me.knasuta.virtualworld.simulation.animals.Human;
+
 import java.util.Vector;
 
 public class World {
@@ -9,8 +11,12 @@ public class World {
     private Vector<String> messages;
     private Organism[][] organismMap;
     private int turn;
-    boolean hexagonal;
+    private boolean hexagonal;
+    private Human player;
 
+    public Human getPlayer(){
+        return player;
+    }
     public void Update(){
         this.turn++;
         this.ClearMessages();
@@ -49,6 +55,9 @@ public class World {
         return this.organismMap[x][y] != null;
     }
     public void AddOrganism(Organism organism) {
+        if(this.IsOccupied(organism.getX(), organism.getY())) {
+            return;
+        }
         this.organisms.add(organism);
         this.organismMap[organism.getX()][organism.getY()] = organism;
     }
@@ -120,6 +129,10 @@ public class World {
     }
 
     public void AddStartingOrganisms(){
+        int x = (int)(Math.random() * this.width);
+        int y = (int)(Math.random() * this.height);
+        this.player = new Human(new Point(x, y), this);
+        this.AddOrganism(this.player);
         int[] organismCounts = new int[OrganismType.values().length];
         organismCounts[OrganismType.WOLF.ordinal()] = 3;
         organismCounts[OrganismType.SHEEP.ordinal()] = 4;
@@ -135,8 +148,8 @@ public class World {
         IOrganismFactory factory = OrganismFactory.getInstance();
         for(OrganismType organismType : OrganismType.values()) {
             for(int i = 0; i < organismCounts[organismType.ordinal()]*baseOrganismCount; i++) {
-                int x = (int)(Math.random() * this.width);
-                int y = (int)(Math.random() * this.height);
+                x = (int)(Math.random() * this.width);
+                y = (int)(Math.random() * this.height);
                 this.AddOrganism(factory.Create(organismType, new Point(x, y), this));
             }
         }

@@ -28,6 +28,6 @@ public class Guarana extends Plant{
 
     @Override
     public Color getColor() {
-        return Color.BLUE;
+        return new Color(255, 0, 255);
     }
 }

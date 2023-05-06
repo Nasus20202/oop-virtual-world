@@ -26,6 +26,8 @@ public abstract class Animal extends Organism {
 
     @Override
     public void Collision(Organism other){
+        if(this == other)
+            return;
         if(TryToBreed(other))
             return;
         else

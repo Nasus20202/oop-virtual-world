@@ -32,6 +32,6 @@ public class Nightshade extends Plant {
 
     @Override
     public Color getColor() {
-        return Color.BLACK;
+        return Color.BLUE;
     }
 }
