@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class NewGameWindow  extends JFrame{
-    private int width = 400;
-    private int height = 300;
+    private int width = 250;
+    private int height = 180;
     private String title = "New Game";
     private MainWindow mainWindow;
     JTextField widthField, heightField;

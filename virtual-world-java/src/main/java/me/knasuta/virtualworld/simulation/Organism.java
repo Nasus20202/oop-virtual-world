@@ -34,11 +34,11 @@ public abstract class Organism {
         if(thisWon || !other.IsAlive()){
             this.world.RemoveOrganism(other);
             this.world.MoveOrganism(this, other.getLocation());
-            this.world.AddMessage(this.getName() + " was eaten by " + other.getName() + " at " + this.getLocation().toString());
+            this.world.AddMessage(other.getName() + " was eaten by " + this.getName() + " at " + other.getLocation().toString());
         }
         else{
             this.world.RemoveOrganism(this);
-            this.world.AddMessage(other.getName() + " was killed by " + this.getName() + " at " + other.getLocation().toString());
+            this.world.AddMessage(this.getName() + " was killed by " + other.getName() + " at " + other.getLocation().toString());
         }
     }
     public abstract boolean AttackPaired(Organism other);

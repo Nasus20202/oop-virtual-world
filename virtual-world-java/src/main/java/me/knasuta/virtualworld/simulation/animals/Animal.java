@@ -13,6 +13,8 @@ public abstract class Animal extends Organism {
             if(this.age >= BREEDING_AGE && other.getAge() >= BREEDING_AGE){
                 Point childLocation = this.world.GetRandomAdjacentPoint(this.location);
                 if(childLocation != null){
+                    if(this.world.getOrganism(childLocation) != null) // if there is already an organism at the child location, don't breed
+                        return true;
                     world.AddOrganism(this.Clone(childLocation, world));
                     world.AddMessage("New " + getName() + " was born at " + childLocation.toString());
                 }

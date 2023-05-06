@@ -81,7 +81,6 @@ public class World {
         return this.hexagonal;
     }
     public void AddMessage(String message) {
-
         this.messages.add(message);
     }
     public Vector<String> getMessages() {
@@ -123,10 +122,11 @@ public class World {
         int[] organismCounts = new int[OrganismType.values().length];
         organismCounts[OrganismType.WOLF.ordinal()] = 3;
         organismCounts[OrganismType.SHEEP.ordinal()] = 4;
-
+        organismCounts[OrganismType.GRASS.ordinal()] = 4;
+        int baseOrganismCount = (int)(2 + Math.log(width * height) * 0.005f);
         IOrganismFactory factory = OrganismFactory.getInstance();
         for(OrganismType organismType : OrganismType.values()) {
-            for(int i = 0; i < organismCounts[organismType.ordinal()]; i++) {
+            for(int i = 0; i < organismCounts[organismType.ordinal()]*baseOrganismCount; i++) {
                 int x = (int)(Math.random() * this.width);
                 int y = (int)(Math.random() * this.height);
                 this.AddOrganism(factory.Create(organismType, new Point(x, y), this));

@@ -10,6 +10,7 @@ public class OrganismFactory implements IOrganismFactory {
         organisms = new Organism[OrganismType.values().length];
         organisms[OrganismType.WOLF.ordinal()] = new Wolf(new Point(0, 0), null);
         organisms[OrganismType.SHEEP.ordinal()] = new Sheep(new Point(0, 0), null);
+        organisms[OrganismType.GRASS.ordinal()] = new Grass(new Point(0, 0), null);
     }
 
     public static OrganismFactory getInstance() {

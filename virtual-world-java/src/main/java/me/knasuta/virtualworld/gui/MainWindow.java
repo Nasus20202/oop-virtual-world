@@ -7,8 +7,8 @@ import java.awt.*;
 
 public class MainWindow extends JFrame {
     private World world;
-    private int width = 1680;
-    private int height = 1260;
+    private int width = 1280;
+    private int height = 720;
     private String title = "Virtual World - Krzysztof Nasuta 193328";
     private JPanel rightPanel, leftPanel, bottomPanel;
     private Map map;
@@ -24,7 +24,6 @@ public class MainWindow extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(width, height);
         setTitle(title);
-        setVisible(true);
         setLayout(new BorderLayout());
 
         this.rightPanel = new JPanel();
@@ -32,7 +31,7 @@ public class MainWindow extends JFrame {
         this.bottomPanel = new JPanel();
         this.map = new Map();
         leftPanel.setPreferredSize(new Dimension(200, 0));
-        rightPanel.setPreferredSize(new Dimension(200, 0));
+        rightPanel.setPreferredSize(new Dimension(300, 0));
         bottomPanel.setPreferredSize(new Dimension(0, 50));
         this.add(this.leftPanel, BorderLayout.WEST);
         this.add(this.rightPanel, BorderLayout.EAST);
@@ -43,7 +42,8 @@ public class MainWindow extends JFrame {
         nextTurnButton.addActionListener(e -> NextTurn());
         bottomPanel.add(nextTurnButton);
 
-        logs = new TextArea();
+        logs = new TextArea("",39, 30, TextArea.SCROLLBARS_VERTICAL_ONLY);
+        logs.setEditable(false);
         rightPanel.add(logs);
 
         menuBar = new JMenuBar();
@@ -57,6 +57,8 @@ public class MainWindow extends JFrame {
         fileMenu.add(saveButton);
         menuBar.add(fileMenu);
         this.setJMenuBar(menuBar);
+
+        setVisible(true);
     }
 
     private void NewGame() {
@@ -69,6 +71,8 @@ public class MainWindow extends JFrame {
         Update();
     }
     private void NextTurn(){
+        if(world == null)
+            return;
         world.Update();
         Update();
     }
