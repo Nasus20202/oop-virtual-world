@@ -5,6 +5,7 @@ import me.knasuta.virtualworld.simulation.World;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class MainWindow extends JFrame {
     private World world;
@@ -53,6 +54,7 @@ public class MainWindow extends JFrame {
 
         logs = new TextArea("",39, 30, TextArea.SCROLLBARS_VERTICAL_ONLY);
         logs.setEditable(false);
+        logs.setFocusable(false);
         rightPanel.add(logs);
 
         menuBar = new JMenuBar();
@@ -69,6 +71,10 @@ public class MainWindow extends JFrame {
 
         directionComboBox = new JComboBox();
         bottomPanel.add(directionComboBox);
+
+        KeyboardFocusManager keyboardFocusManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+        keyboardFocusManager.addKeyEventDispatcher(new KeyboardDispatcher());
+
         setVisible(true);
     }
 
@@ -130,6 +136,40 @@ public class MainWindow extends JFrame {
             log += message + '\n';
         }
         logs.setText(log);
+    }
+
+    private void HandleKeyPress(KeyEvent e){
+        if(world == null)
+            return;
+        if(world.IsHexagonal()) {
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_SPACE -> Update();
+                case KeyEvent.VK_R -> directionComboBox.setSelectedIndex(0);
+                case KeyEvent.VK_Q -> directionComboBox.setSelectedIndex(1);
+                case KeyEvent.VK_W -> directionComboBox.setSelectedIndex(2);
+                case KeyEvent.VK_A -> directionComboBox.setSelectedIndex(3);
+                case KeyEvent.VK_S -> directionComboBox.setSelectedIndex(4);
+                case KeyEvent.VK_Z -> directionComboBox.setSelectedIndex(5);
+                case KeyEvent.VK_X -> directionComboBox.setSelectedIndex(6);
+            }
+        } else {
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_SPACE -> Update();
+                case KeyEvent.VK_R -> directionComboBox.setSelectedIndex(0);
+                case KeyEvent.VK_W -> directionComboBox.setSelectedIndex(1);
+                case KeyEvent.VK_A -> directionComboBox.setSelectedIndex(2);
+                case KeyEvent.VK_D -> directionComboBox.setSelectedIndex(3);
+                case KeyEvent.VK_S -> directionComboBox.setSelectedIndex(4);
+            }
+        }
+    }
+    private class KeyboardDispatcher implements KeyEventDispatcher {
+        @Override
+        public boolean dispatchKeyEvent(KeyEvent e) {
+            if (e.getID() == KeyEvent.KEY_PRESSED)
+                HandleKeyPress(e);
+            return false;
+        }
     }
 }
 
