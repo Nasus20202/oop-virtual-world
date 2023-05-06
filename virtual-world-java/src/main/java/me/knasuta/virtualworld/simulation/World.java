@@ -2,9 +2,10 @@ package me.knasuta.virtualworld.simulation;
 
 import me.knasuta.virtualworld.simulation.animals.Human;
 
+import java.io.*;
 import java.util.Vector;
 
-public class World {
+public class World implements Serializable {
     private int width;
     private int height;
     private Vector<Organism> organisms;
@@ -158,5 +159,35 @@ public class World {
 
     public Vector<Organism> getOrganisms() {
         return this.organisms;
+    }
+
+    public boolean Save(String absolutePath) {
+        try {
+            FileOutputStream fileOut = new FileOutputStream(absolutePath);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(this);
+            out.close();
+            fileOut.close();
+        } catch (FileNotFoundException e) {
+            return false;
+        }
+        catch(IOException e) {
+            throw new RuntimeException(e);
+        }
+        return true;
+    }
+    public static World Load(String absolutePath) {
+        try {
+            FileInputStream fileIn = new FileInputStream(absolutePath);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            World world = (World) in.readObject();
+            in.close();
+            fileIn.close();
+            return world;
+        } catch (FileNotFoundException e) {
+            return null;
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -1,15 +1,16 @@
 package me.knasuta.virtualworld.gui;
 
 import me.knasuta.virtualworld.simulation.MovementType;
-import me.knasuta.virtualworld.simulation.Point;
 import me.knasuta.virtualworld.simulation.World;
 import me.knasuta.virtualworld.simulation.animals.Human;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.File;
 
 public class MainWindow extends JFrame {
+    private String extension = "vws";
     private World world;
     private int width = 1280;
     private int height = 720;
@@ -20,7 +21,7 @@ public class MainWindow extends JFrame {
     private JMenuBar menuBar;
     private JMenuItem loadButton, saveButton, newGameButton;
     private JButton nextTurnButton, abilityButton;
-    private JLabel abilityLabel;
+    private JLabel statusLabel;
     private JComboBox directionComboBox;
 
     private TextArea logs;
@@ -66,6 +67,8 @@ public class MainWindow extends JFrame {
         newGameButton.addActionListener(e -> NewGame());
         loadButton = new JMenuItem("Load");
         saveButton = new JMenuItem("Save");
+        loadButton.addActionListener(e -> LoadGame());
+        saveButton.addActionListener(e -> SaveGame());
         fileMenu.add(newGameButton);
         fileMenu.add(loadButton);
         fileMenu.add(saveButton);
@@ -79,13 +82,40 @@ public class MainWindow extends JFrame {
         abilityButton.addActionListener(e -> UseAbility());
         bottomPanel.add(abilityButton);
 
-        abilityLabel = new JLabel();
-        bottomPanel.add(abilityLabel);
+        statusLabel = new JLabel();
+        bottomPanel.add(statusLabel);
 
         KeyboardFocusManager keyboardFocusManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         keyboardFocusManager.addKeyEventDispatcher(new KeyboardDispatcher());
 
         setVisible(true);
+    }
+
+    private void LoadGame(){
+        ChooseSaveFileDialog fileChooser = new ChooseSaveFileDialog("Load game", extension);
+        int result = fileChooser.showOpenDialog(this);
+        if(result == JFileChooser.APPROVE_OPTION){
+            File file = fileChooser.getSelectedFile();
+            world = World.Load(file.getAbsolutePath());
+            if(world == null){
+                JOptionPane.showMessageDialog(this, "Cannot load save", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            PrepareForNewGame();
+        }
+    }
+    private void SaveGame(){
+        if(world == null)
+            return;
+        ChooseSaveFileDialog fileChooser = new ChooseSaveFileDialog("Save game", extension);
+        int result = fileChooser.showSaveDialog(this);
+        if(result == JFileChooser.APPROVE_OPTION){
+            File file = fileChooser.getSelectedFile();
+            boolean success = world.Save(file.getAbsolutePath());
+            if(!success){
+                JOptionPane.showMessageDialog(this, "Cannot save game", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 
     private void UseAbility(){
@@ -101,6 +131,7 @@ public class MainWindow extends JFrame {
         } else {
             world.getPlayer().UseAbility();
         }
+        UpdateStatusText();
     }
 
     private void NewGame() {
@@ -108,13 +139,15 @@ public class MainWindow extends JFrame {
     }
     public void NewGameCallback(int width, int height, boolean hex){
         world = new World(width, height, hex);
-         PrepareForNewGame();
+        world.AddStartingOrganisms();
+        PrepareForNewGame();
+        Update();
     }
     private void PrepareForNewGame(){
-        world.AddStartingOrganisms();
         map.setWorld(world);
         scrollPane.revalidate();
         scrollPane.repaint();
+        UpdateStatusText();
         directionComboBox.removeAllItems();
         String[] directions;
         if(world.IsHexagonal()){
@@ -125,7 +158,6 @@ public class MainWindow extends JFrame {
         for(String direction : directions){
             directionComboBox.addItem(direction);
         }
-        Update();
     }
     private void NextTurn(){
         if(world == null)
@@ -161,20 +193,25 @@ public class MainWindow extends JFrame {
             log += message + '\n';
         }
         logs.setText(log);
+        UpdateStatusText();
+    }
+
+    private void UpdateStatusText(){
         Human player = world.getPlayer();
         String abilityText;
         if(!player.IsAlive()){
             abilityText = "You are dead!";
         } else {
             if(player.isAbilityActive()){
-                abilityText = "Ability active! Active for " + player.getAbilityDuration() + " turns.";
+                abilityText = "Ability active! Active for " + player.getAbilityDuration() + " turns. ";
             } else if(player.isAbilityReady()){
-                abilityText = "Ability ready!";
+                abilityText = "Ability ready! ";
             } else {
-                abilityText = "Ability not ready! Wait for " + player.getAbilityCooldown() + " turns.";
+                abilityText = "Ability not ready! Wait for " + player.getAbilityCooldown() + " turns. ";
             }
+            abilityText += "Position: " + player.getLocation().toString();
         }
-        abilityLabel.setText(abilityText);
+        statusLabel.setText(abilityText);
     }
 
     private void HandleKeyPress(KeyEvent e){

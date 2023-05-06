@@ -1,8 +1,9 @@
 package me.knasuta.virtualworld.simulation;
 
 import java.awt.Color;
+import java.io.Serializable;
 
-public abstract class Organism {
+public abstract class Organism implements Serializable {
     protected Point location;
     protected int strength;
     protected int initiative;
