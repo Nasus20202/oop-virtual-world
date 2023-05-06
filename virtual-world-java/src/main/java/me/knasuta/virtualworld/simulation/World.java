@@ -102,7 +102,7 @@ public class World {
         for(int x = location.getX() - 1; x <= location.getX() + 1; x++) {
             for(int y = location.getY() - 1; y <= location.getY() + 1; y++) {
                 if(x >= 0 && x < this.width && y >= 0 && y < this.height && (x != location.getX() || y != location.getY())) {
-                    if(this.hexagonal && (x == location.getX() - 1 && y == location.getY() + 1 || x == location.getX() + 1 && y == location.getY() - 1))
+                    if(this.hexagonal && (x == location.getX() - 1 && y == location.getY() - 1 || x == location.getX() + 1 && y == location.getY() + 1))
                         continue;
                     adjacentPoints.add(new Point(x, y));
                 }
