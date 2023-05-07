@@ -6,13 +6,13 @@ import java.io.*;
 import java.util.Vector;
 
 public class World implements Serializable {
-    private int width;
-    private int height;
-    private Vector<Organism> organisms;
-    private Vector<String> messages;
-    private Organism[][] organismMap;
+    private final int width;
+    private final int height;
+    private final Vector<Organism> organisms;
+    private final Vector<String> messages;
+    private final Organism[][] organismMap;
     private int turn;
-    private boolean hexagonal;
+    private final boolean hexagonal;
     private Human player;
 
     public Human getPlayer(){

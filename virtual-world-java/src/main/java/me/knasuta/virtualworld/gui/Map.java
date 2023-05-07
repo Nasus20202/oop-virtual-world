@@ -3,7 +3,6 @@ package me.knasuta.virtualworld.gui;
 import me.knasuta.virtualworld.simulation.Organism;
 import me.knasuta.virtualworld.simulation.Point;
 import me.knasuta.virtualworld.simulation.World;
-import me.knasuta.virtualworld.simulation.animals.Human;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,27 +34,27 @@ public class Map extends JPanel implements MouseListener {
             if(world.IsHexagonal()){
                 int x = hexagonSize +(int)(organism.getX() * hexagonSize * Math.sqrt(3) + organism.getY() * hexagonSize * Math.sqrt(3)/2.0);
                 int y = hexagonSize + organism.getY() * hexagonSize * 2;
-                DrawHexagon(g, x, y, organism.getColor(), hexagonSize);
+                DrawHexagon(g, x, y, organism.getColor());
             } else {
                 int x = organism.getX() * rectangleSize;
                 int y = organism.getY() * rectangleSize;
-                DrawRectangle(g, x, y, organism.getColor(), rectangleSize);
+                DrawRectangle(g, x, y, organism.getColor());
             }
         }
     }
 
-    private void DrawRectangle(Graphics g, int x, int y, Color color, int size){
+    private void DrawRectangle(Graphics g, int x, int y, Color color){
         g.setColor(color);
-        g.fillRect(x, y, size, size);
+        g.fillRect(x, y, Map.rectangleSize, Map.rectangleSize);
     }
 
-    private void DrawHexagon(Graphics g, int x, int y, Color color, int size){
+    private void DrawHexagon(Graphics g, int x, int y, Color color){
         int[] xPoints = new int[6];
         int[] yPoints = new int[6];
         for(int i = 0; i < 6; i++){
             double angle = 2 * Math.PI / 6 * i + Math.PI / 6;
-            xPoints[i] = (int) (x + size * Math.cos(angle));
-            yPoints[i] = (int) (y + size * Math.sin(angle));
+            xPoints[i] = (int) (x + Map.hexagonSize * Math.cos(angle));
+            yPoints[i] = (int) (y + Map.hexagonSize * Math.sin(angle));
         }
         g.setColor(color);
         g.fillPolygon(xPoints, yPoints, 6);
@@ -105,24 +104,12 @@ public class Map extends JPanel implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         HandleMouseClick(e);
     }
-
     @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
+    public void mousePressed(MouseEvent e) {}
     @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
+    public void mouseReleased(MouseEvent e) {}
     @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
+    public void mouseEntered(MouseEvent e) {}
     @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
+    public void mouseExited(MouseEvent e) {}
 }

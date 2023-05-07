@@ -61,14 +61,10 @@ public class Human extends Animal {
     }
 
     public int getAbilityCooldown() {
-        if(abilityCooldown < 0)
-            return 0;
-        return abilityCooldown;
+        return Math.max(abilityCooldown, 0);
     }
     public int getAbilityDuration() {
-        if(abilityDuration < 0)
-            return 0;
-        return abilityDuration;
+        return Math.max(abilityDuration, 0);
     }
     public boolean isAbilityActive() {
         return abilityDuration > 0;

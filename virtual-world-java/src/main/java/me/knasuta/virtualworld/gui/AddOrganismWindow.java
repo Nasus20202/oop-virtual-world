@@ -5,15 +5,12 @@ import me.knasuta.virtualworld.simulation.Point;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Dictionary;
 
 public class AddOrganismWindow  extends JFrame{
-    private int width = 250;
-    private int height = 120;
-    private World world;
-    private Point position;
-    private Map map;
-    JComboBox organismComboBox;
+    private final World world;
+    private final Point position;
+    private final Map map;
+    JComboBox<OrganismNameTypePair> organismComboBox;
     OrganismNameTypePair pairs[] = {
             new OrganismNameTypePair("Wolf", OrganismType.WOLF),
             new OrganismNameTypePair("Sheep", OrganismType.SHEEP),
@@ -29,6 +26,8 @@ public class AddOrganismWindow  extends JFrame{
 
 
     public AddOrganismWindow(World world, Point position, Map map) {
+        int width = 250;
+        int height = 120;
         setSize(width, height);
         setTitle(position.toString());
         setResizable(false);
@@ -39,8 +38,8 @@ public class AddOrganismWindow  extends JFrame{
 
         setLayout(new GridLayout(3, 1));
 
-        organismComboBox = new JComboBox();
-        organismComboBox.setModel(new DefaultComboBoxModel(pairs));
+        organismComboBox = new JComboBox<OrganismNameTypePair>();
+        organismComboBox.setModel(new DefaultComboBoxModel<>(pairs));
         add(organismComboBox);
 
         JButton submitButton = new JButton("Submit");
@@ -63,7 +62,7 @@ public class AddOrganismWindow  extends JFrame{
         dispose();
     }
 
-    private class OrganismNameTypePair {
+    private static class OrganismNameTypePair {
         public String name;
         public OrganismType type;
 

@@ -5,7 +5,6 @@ import me.knasuta.virtualworld.simulation.Point;
 import me.knasuta.virtualworld.simulation.World;
 
 import java.awt.*;
-import java.util.Random;
 
 public class Antelope extends Animal {
     public Antelope(Point location, World world) {
@@ -13,9 +12,14 @@ public class Antelope extends Animal {
     }
 
     @Override
+    public void Action() {
+        for(int i = 0; i < 2; i++)
+            if(IsAlive())
+                super.Action();
+    }
+    @Override
     public boolean AttackPaired(Organism other) {
-        int random = new Random().nextInt(2);
-        if (random != 0) {
+        if (Math.random() < 0.5) {
             Point point = world.GetRandomAdjacentPoint(location);
             if (point != null) {
                 world.MoveOrganism(this, point);

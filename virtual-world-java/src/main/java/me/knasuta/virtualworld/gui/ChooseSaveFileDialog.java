@@ -3,7 +3,6 @@ package me.knasuta.virtualworld.gui;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
-import java.io.FileFilter;
 
 public class ChooseSaveFileDialog extends JFileChooser {
     String extension;

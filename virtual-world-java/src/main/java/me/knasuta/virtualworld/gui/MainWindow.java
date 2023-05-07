@@ -10,19 +10,12 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 
 public class MainWindow extends JFrame {
-    private String extension = "vws";
+    private final String extension = "vws";
     private World world;
-    private int width = 1280;
-    private int height = 720;
-    private String title = "Virtual World - Krzysztof Nasuta 193328";
-    private JPanel rightPanel, leftPanel, bottomPanel;
     private Map map;
     private JScrollPane scrollPane;
-    private JMenuBar menuBar;
-    private JMenuItem loadButton, saveButton, newGameButton;
-    private JButton nextTurnButton, abilityButton;
     private JLabel statusLabel;
-    private JComboBox directionComboBox;
+    private JComboBox<String> directionComboBox;
 
     private TextArea logs;
     public MainWindow() {
@@ -30,43 +23,54 @@ public class MainWindow extends JFrame {
     }
 
     private void InitComponents() {
+        int width = 1280;
+        int height = 720;
+        String title = "Virtual World - Krzysztof Nasuta 193328";
+        int legendPanelWidth = 150;
+        int rightPanelWidth = 250;
+        int bottomPanelHeight = 50;
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(width, height);
         setTitle(title);
         setLayout(new BorderLayout());
 
-        this.rightPanel = new JPanel();
-        this.leftPanel = new JPanel();
-        this.bottomPanel = new JPanel();
+        LegendPanel legendPanel = new LegendPanel();
+        JPanel rightPanel = new JPanel();
+        JPanel bottomPanel = new JPanel();
 
         this.map = new Map();
         scrollPane = new JScrollPane(map);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-        leftPanel.setPreferredSize(new Dimension(200, 0));
-        rightPanel.setPreferredSize(new Dimension(300, 0));
-        bottomPanel.setPreferredSize(new Dimension(0, 50));
-        this.add(this.leftPanel, BorderLayout.WEST);
-        this.add(this.rightPanel, BorderLayout.EAST);
-        this.add(this.bottomPanel, BorderLayout.SOUTH);
+        legendPanel.setPreferredSize(new Dimension(legendPanelWidth, 0));
+        rightPanel.setPreferredSize(new Dimension(rightPanelWidth, 0));
+        bottomPanel.setPreferredSize(new Dimension(0, bottomPanelHeight));
+        this.add(legendPanel, BorderLayout.WEST);
+        this.add(rightPanel, BorderLayout.EAST);
+        this.add(bottomPanel, BorderLayout.SOUTH);
         this.add(scrollPane, BorderLayout.CENTER);
 
-        nextTurnButton = new JButton("Next turn");
+        JButton nextTurnButton = new JButton("Next turn");
         nextTurnButton.addActionListener(e -> NextTurn());
         bottomPanel.add(nextTurnButton);
 
-        logs = new TextArea("",39, 30, TextArea.SCROLLBARS_VERTICAL_ONLY);
+
+        rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
+        logs = new TextArea( "", 0, 0, TextArea.SCROLLBARS_VERTICAL_ONLY);
+        logs.setPreferredSize(new Dimension(rightPanelWidth -10, 0));
         logs.setEditable(false);
         logs.setFocusable(false);
-        rightPanel.add(logs);
+        JScrollPane logsScrollPane = new JScrollPane(logs);
+        rightPanel.add(logsScrollPane);
 
-        menuBar = new JMenuBar();
+        JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
-        newGameButton = new JMenuItem("New Game");
+        JMenuItem newGameButton = new JMenuItem("New Game");
         newGameButton.addActionListener(e -> NewGame());
-        loadButton = new JMenuItem("Load");
-        saveButton = new JMenuItem("Save");
+        JMenuItem loadButton = new JMenuItem("Load");
+        JMenuItem saveButton = new JMenuItem("Save");
         loadButton.addActionListener(e -> LoadGame());
         saveButton.addActionListener(e -> SaveGame());
         fileMenu.add(newGameButton);
@@ -75,10 +79,10 @@ public class MainWindow extends JFrame {
         menuBar.add(fileMenu);
         this.setJMenuBar(menuBar);
 
-        directionComboBox = new JComboBox();
+        directionComboBox = new JComboBox<>();
         bottomPanel.add(directionComboBox);
 
-        abilityButton = new JButton("Use shield");
+        JButton abilityButton = new JButton("Use shield");
         abilityButton.addActionListener(e -> UseAbility());
         bottomPanel.add(abilityButton);
 

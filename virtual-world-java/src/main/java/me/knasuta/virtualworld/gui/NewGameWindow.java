@@ -4,15 +4,15 @@ import javax.swing.*;
 import java.awt.*;
 
 public class NewGameWindow  extends JFrame{
-    private int width = 250;
-    private int height = 180;
-    private String title = "New Game";
-    private MainWindow mainWindow;
+    private final MainWindow mainWindow;
     JTextField widthField, heightField;
     JCheckBox hexCheckBox;
 
-
     public NewGameWindow(MainWindow mainWindow) {
+        int width = 250;
+        int height = 180;
+        String title = "New Game";
+
         setSize(width, height);
         setTitle(title);
         setResizable(false);

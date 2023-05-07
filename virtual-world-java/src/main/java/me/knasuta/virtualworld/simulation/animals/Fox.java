@@ -5,7 +5,6 @@ import me.knasuta.virtualworld.simulation.Point;
 import me.knasuta.virtualworld.simulation.World;
 
 import java.awt.*;
-import java.util.Random;
 
 public class Fox extends Animal {
     public Fox(Point location, World world) {

@@ -5,7 +5,6 @@ import me.knasuta.virtualworld.simulation.Point;
 import me.knasuta.virtualworld.simulation.World;
 
 import java.awt.*;
-import java.util.Random;
 
 public class Turtle extends Animal {
 
@@ -39,8 +38,7 @@ public class Turtle extends Animal {
 
     @Override
     public void Action(){
-        int random = new Random().nextInt(4);
-        if(random == 0)
+        if(Math.random() < 0.25)
             super.Action();
     }
 }
