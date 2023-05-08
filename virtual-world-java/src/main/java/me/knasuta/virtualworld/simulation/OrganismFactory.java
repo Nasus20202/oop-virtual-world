@@ -30,4 +30,9 @@ public class OrganismFactory implements IOrganismFactory {
     public Organism Create(OrganismType type, Point location, World world) {
         return organisms[type.ordinal()].Clone(location, world);
     }
+
+    @Override
+    public String GetName(OrganismType type) {
+        return organisms[type.ordinal()].getName();
+    }
 }

@@ -10,19 +10,8 @@ public class AddOrganismWindow  extends JFrame{
     private final World world;
     private final Point position;
     private final Map map;
-    JComboBox<OrganismNameTypePair> organismComboBox;
-    OrganismNameTypePair pairs[] = {
-            new OrganismNameTypePair("Wolf", OrganismType.WOLF),
-            new OrganismNameTypePair("Sheep", OrganismType.SHEEP),
-            new OrganismNameTypePair("Fox", OrganismType.FOX),
-            new OrganismNameTypePair("Turtle", OrganismType.TURTLE),
-            new OrganismNameTypePair("Antelope", OrganismType.ANTELOPE),
-            new OrganismNameTypePair("Grass", OrganismType.GRASS),
-            new OrganismNameTypePair("Dandelion", OrganismType.DANDELION),
-            new OrganismNameTypePair("Guarana", OrganismType.GUARANA),
-            new OrganismNameTypePair("Nightshade", OrganismType.NIGHTSHADE),
-            new OrganismNameTypePair("Sosnowsky's Hogweed", OrganismType.SOSNOWSKY_HOGWEED),
-    };
+    private final OrganismNameTypePair[] pairs;
+    private final JComboBox<OrganismNameTypePair> organismComboBox;
 
 
     public AddOrganismWindow(World world, Point position, Map map) {
@@ -38,7 +27,12 @@ public class AddOrganismWindow  extends JFrame{
 
         setLayout(new GridLayout(3, 1));
 
-        organismComboBox = new JComboBox<OrganismNameTypePair>();
+        pairs = new OrganismNameTypePair[OrganismType.values().length];
+        for(int i = 0; i < OrganismType.values().length; i++){
+            OrganismType type = OrganismType.values()[i];
+            pairs[i] = new OrganismNameTypePair(OrganismFactory.getInstance().GetName(type), type);
+        }
+        organismComboBox = new JComboBox<>();
         organismComboBox.setModel(new DefaultComboBoxModel<>(pairs));
         add(organismComboBox);
 
