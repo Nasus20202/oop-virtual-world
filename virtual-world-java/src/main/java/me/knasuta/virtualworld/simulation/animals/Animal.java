@@ -3,7 +3,7 @@ package me.knasuta.virtualworld.simulation.animals;
 import me.knasuta.virtualworld.simulation.*;
 
 public abstract class Animal extends Organism {
-    protected static int BREEDING_AGE = 5;
+    protected static int BREEDING_AGE = 1;
     public Animal(Point location, int strength, int initiative, int age, World world){
         super(location, strength, initiative, age, world);
     }
@@ -13,8 +13,11 @@ public abstract class Animal extends Organism {
             if(this.age >= BREEDING_AGE && other.getAge() >= BREEDING_AGE){
                 Point childLocation = this.world.GetRandomAdjacentPoint(this.location);
                 if(childLocation != null){
-                    if(this.world.getOrganism(childLocation) != null) // if there is already an organism at the child location, don't breed
+                    Organism organism = this.world.getOrganism(childLocation);
+                    if(organism instanceof Animal) // if there is already an animal at the child location, don't breed
                         return true;
+                    if(organism != null)
+                        this.world.RemoveOrganism(organism);
                     world.AddOrganism(this.Clone(childLocation, world));
                     world.AddMessage("New " + getName() + " was born at " + childLocation.toString());
                 }

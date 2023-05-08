@@ -136,12 +136,12 @@ public class World implements Serializable {
         this.player = new Human(new Point(x, y), this);
         this.AddOrganism(this.player);
         int[] organismCounts = new int[OrganismType.values().length];
-        organismCounts[OrganismType.WOLF.ordinal()] = 3;
-        organismCounts[OrganismType.SHEEP.ordinal()] = 4;
+        organismCounts[OrganismType.WOLF.ordinal()] = 5;
+        organismCounts[OrganismType.SHEEP.ordinal()] = 7;
         organismCounts[OrganismType.GRASS.ordinal()] = 4;
-        organismCounts[OrganismType.ANTELOPE.ordinal()] = 4;
-        organismCounts[OrganismType.FOX.ordinal()] = 4;
-        organismCounts[OrganismType.TURTLE.ordinal()] = 4;
+        organismCounts[OrganismType.ANTELOPE.ordinal()] = 7;
+        organismCounts[OrganismType.FOX.ordinal()] = 6;
+        organismCounts[OrganismType.TURTLE.ordinal()] = 5;
         organismCounts[OrganismType.DANDELION.ordinal()] = 2;
         organismCounts[OrganismType.GUARANA.ordinal()] = 1;
         organismCounts[OrganismType.NIGHTSHADE.ordinal()] = 1;
