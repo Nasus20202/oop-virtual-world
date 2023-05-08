@@ -3,7 +3,7 @@ package me.knasuta.virtualworld.simulation;
 import java.awt.Color;
 import java.io.Serializable;
 
-public abstract class Organism implements Serializable {
+public abstract class Organism implements Serializable, Comparable<Organism> {
     protected Point location;
     protected int strength;
     protected int initiative;
@@ -88,22 +88,18 @@ public abstract class Organism implements Serializable {
     public void Kill() {
         this.alive = false;
     }
-
-    public static class Comparator implements java.util.Comparator<Organism> {
-        @Override
-        public int compare(Organism o1, Organism o2) {
-            if(o1.getInitiative() > o2.getInitiative()) {
+    public int compareTo(Organism other){
+        if(this.getInitiative() > other.getInitiative()) {
+            return -1;
+        } else if(this.getInitiative() < other.getInitiative()) {
+            return 1;
+        } else {
+            if(this.getAge() > other.getAge()) {
                 return -1;
-            } else if(o1.getInitiative() < o2.getInitiative()) {
+            } else if(this.getAge() < other.getAge()) {
                 return 1;
             } else {
-                if(o1.getAge() > o2.getAge()) {
-                    return -1;
-                } else if(o1.getAge() < o2.getAge()) {
-                    return 1;
-                } else {
-                    return 0;
-                }
+                return 0;
             }
         }
     }

@@ -213,7 +213,7 @@ public class MainWindow extends JFrame {
             } else {
                 abilityText = "Ability not ready! Wait for " + player.getAbilityCooldown() + " turns. ";
             }
-            abilityText += "Position: " + player.getLocation().toString();
+            abilityText += "Position: " + player.getLocation().toString() + " Turn: " + (world.getTurn()+1);
         }
         statusLabel.setText(abilityText);
     }

@@ -3,6 +3,7 @@ package me.knasuta.virtualworld.simulation;
 import me.knasuta.virtualworld.simulation.animals.Human;
 
 import java.io.*;
+import java.util.PriorityQueue;
 import java.util.Vector;
 
 public class World implements Serializable {
@@ -21,10 +22,10 @@ public class World implements Serializable {
     public void Update(){
         this.turn++;
         this.ClearMessages();
-        this.organisms.sort(new Organism.Comparator());
-        for(int i = 0; i < organisms.size(); i++) {
-            Organism organism = organisms.get(i);
-            if(organism.IsAlive() && organism.getAge() > 0)
+        PriorityQueue<Organism> organisms = new PriorityQueue<>(this.organisms);
+        while(!organisms.isEmpty()){
+            Organism organism = organisms.poll();
+            if(organism.IsAlive())
                 organism.Action();
             organism.setAge(organism.getAge()+1);
         }
