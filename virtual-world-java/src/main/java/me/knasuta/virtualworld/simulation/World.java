@@ -24,7 +24,7 @@ public class World implements Serializable {
         this.organisms.sort(new Organism.Comparator());
         for(int i = 0; i < organisms.size(); i++) {
             Organism organism = organisms.get(i);
-            if(organism.IsAlive())
+            if(organism.IsAlive() && organism.getAge() > 0)
                 organism.Action();
             organism.setAge(organism.getAge()+1);
         }
