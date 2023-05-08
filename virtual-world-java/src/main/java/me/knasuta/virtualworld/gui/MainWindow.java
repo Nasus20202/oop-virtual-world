@@ -152,6 +152,7 @@ public class MainWindow extends JFrame {
         scrollPane.revalidate();
         scrollPane.repaint();
         UpdateStatusText();
+        UpdateLogs();
         directionComboBox.removeAllItems();
         String[] directions;
         if(world.IsHexagonal()){
@@ -192,12 +193,16 @@ public class MainWindow extends JFrame {
     }
     private void Update(){
         map.Update();
+        UpdateLogs();
+        UpdateStatusText();
+    }
+
+    public void UpdateLogs(){
         String log = "";
         for(String message : world.getMessages()){
             log += message + '\n';
         }
         logs.setText(log);
-        UpdateStatusText();
     }
 
     private void UpdateStatusText(){
